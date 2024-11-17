@@ -131,6 +131,12 @@
       # Enable alternative shell support in nix-darwin.
       programs.fish.enable = true;
 
+     # programs.git = {
+     #   enable = true;
+     #   userName  = "Surya Nyayapati";
+     #   userEmail = "surenrao@gmail.com";
+     # };
+
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
 
