@@ -23,8 +23,8 @@
     # Reference: $ darwin-rebuild changelog
     # Updated to 5 for compatibility with NixOS 24.11
     stateVersion = 5;
-    
-    # Target platform architecture
-    nixpkgs.hostPlatform = "aarch64-darwin";  # Apple Silicon
   };
+  
+  # Target platform architecture
+  nixpkgs.hostPlatform = "aarch64-darwin";  # Apple Silicon
 }
