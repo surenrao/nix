@@ -13,6 +13,13 @@
     # Development Environment
     vscode            # Visual Studio Code editor
     
+    # Programming Languages and Runtimes
+    python3           # Python 3 interpreter
+    nodejs            # Node.js JavaScript runtime
+    
+    # AI Development Tools
+    aider-chat        # AI pair programming tool
+    
     # Container and Virtualization
     docker            # Container platform
     docker-compose    # Multi-container Docker applications
