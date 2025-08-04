@@ -99,6 +99,12 @@ If you encounter issues, you can rollback:
    - Consider reverting to unstable temporarily
    - Report issues to the nix-darwin project
 
+4. **Plist Generation Warning**
+   - Warning: `Using lib.generators.toPlist without escape = true is deprecated`
+   - This is a harmless deprecation warning from nix-darwin itself
+   - It doesn't affect functionality and will be fixed in future nix-darwin versions
+   - Safe to ignore for now
+
 ### Getting Help
 - NixOS Manual: https://nixos.org/manual/nixos/stable/
 - nix-darwin Documentation: https://github.com/LnL7/nix-darwin
