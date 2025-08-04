@@ -11,11 +11,13 @@ A modular nix-darwin configuration for macOS using flakes, designed for MacBook 
 ├── modules/                     # Modular configuration files
 │   ├── applications.nix         # App linking & Spotlight integration
 │   ├── homebrew.nix            # Homebrew packages & casks
+│   ├── home.nix                # Home Manager user configuration
 │   ├── nix-config.nix          # Nix daemon settings
 │   ├── packages.nix            # System packages
 │   ├── security.nix            # Security & authentication
 │   ├── system-defaults.nix     # macOS system preferences
 │   └── user.nix                # User configuration
+├── HOME_MANAGER_SETUP.md       # Home Manager documentation
 └── README.md                   # This file
 ```
 
