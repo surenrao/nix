@@ -2,16 +2,24 @@
   # https://www.youtube.com/watch?v=Z8BL8mdzWHI
   # https://github.com/dreamsofautonomy/nix-darwin/blob/main/flake.nix
   # darwin-rebuild switch --flake ~/nix#m4max
-  description = "Surya MacbookPro2024 nix-darwin system flake";
+  description = "Surya MacbookPro2024 nix-darwin system flake - NixOS 24.11 stable";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/8809585e6937d0b07fc066792c8c9abf9c3fe5c4";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # Using NixOS 24.11 stable release for better stability
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    
+    # nix-darwin: Declarative macOS configuration
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";  
+    
+    # nix-homebrew: Homebrew integration for Nix
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
+    
+    # mac-app-util: macOS application utilities
     mac-app-util.url = "github:hraban/mac-app-util";
-  }; 
+    mac-app-util.inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }:
   let
@@ -255,6 +263,7 @@
 
       # Used for backwards compatibility, please read the changelog before changing.
       # $ darwin-rebuild changelog
+      # Updated to 5 for compatibility with NixOS 24.11
       system.stateVersion = 5;
 
       # The platform the configuration will be used on.
