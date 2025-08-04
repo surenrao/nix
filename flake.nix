@@ -7,17 +7,17 @@
   inputs = {
     # Using nixpkgs-unstable (recommended stable approach for macOS)
     # This is actually the most stable approach for nix-darwin according to the documentation
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/bf9fa86a9b1005d932f842edf2c38eeecc98eef3";
     
-    # nix-darwin: Declarative macOS configuration (master branch)
-    nix-darwin.url = "github:LnL7/nix-darwin";
+    # nix-darwin: Declarative macOS configuration (pinned to specific commit)
+    nix-darwin.url = "github:LnL7/nix-darwin/e04a388232d9a6ba56967ce5b53a8a6f713cdfcf";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     
-    # nix-homebrew: Homebrew integration for Nix
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    # nix-homebrew: Homebrew integration for Nix (pinned to specific commit)
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew/314d057294e79bc2596972126b84c6f9f144499a";
     
-    # mac-app-util: macOS application utilities
-    mac-app-util.url = "github:hraban/mac-app-util";
+    # mac-app-util: macOS application utilities (pinned to specific commit)
+    mac-app-util.url = "github:hraban/mac-app-util/341ede93f290df7957047682482c298e47291b4d";
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }:
@@ -67,6 +67,8 @@
           # clipboard manager
           "maccy"
           "itsycal"
+          # LLM inference engine
+          "lm-studio"
         ];
         # mac store apps
         masApps = {
@@ -112,8 +114,14 @@
           while read -r src; do
             app_name=$(basename "$src")
             echo "linking $src" >&2
-            ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+            # Create symbolic links instead of aliases for better Spotlight integration
+            ln -sf "$src" "/Applications/Nix Apps/$app_name"
           done
+          
+          # Force Spotlight to reindex the Applications folder
+          echo "Reindexing Spotlight for Applications..." >&2
+          /usr/bin/mdimport -r /Applications/Nix\ Apps/ || true
+          /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f -R -domain local -domain system -domain user /Applications/Nix\ Apps/ || true
         '';
 
       # https://nixcademy.com/posts/nix-on-macos/
@@ -124,21 +132,20 @@
       # MacOS system setting https://mynixos.com/nix-darwin/options/system.defaults
       system.defaults = {
         dock.autohide  = true;
-        dock.persistent-apps = [         
-	        "/System/Applications/Launchpad.app"	  
-	        "/Applications/Firefox.app"
+        dock.persistent-apps = [
+         "/System/Applications/Launchpad.app"
+         "/Applications/Firefox.app"
           "/Applications/Google Chrome.app"
- 	        "/System/Applications/Messages.app"
+          "/System/Applications/Messages.app"
           "/System/Applications/Calendar.app"
-	        "/System/Applications/Mail.app"
-          "/System/Applications/App Store.app"   
+         "/System/Applications/Mail.app"
+          "/System/Applications/App Store.app"
           "/System/Applications/Notes.app"
           "/System/Applications/iPhone Mirroring.app"
           "/System/Applications/System Settings.app"
-	        "${pkgs.alacritty}/Applications/Alacritty.app"
-          "/System/Applications/Utilities/Terminal.app"        
-          "/Applications/Skype.app"
-	      ];        
+         "${pkgs.alacritty}/Applications/Alacritty.app"
+          "/System/Applications/Utilities/Terminal.app"
+       ];
         
         finder = {
 	        FXPreferredViewStyle = "clmv";
