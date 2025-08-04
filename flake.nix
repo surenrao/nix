@@ -2,23 +2,22 @@
   # https://www.youtube.com/watch?v=Z8BL8mdzWHI
   # https://github.com/dreamsofautonomy/nix-darwin/blob/main/flake.nix
   # darwin-rebuild switch --flake ~/nix#m4max
-  description = "Surya MacbookPro2024 nix-darwin system flake - NixOS 24.11 stable";
+  description = "Surya MacbookPro2024 nix-darwin system flake - nixpkgs-unstable (stable approach)";
 
   inputs = {
-    # Using NixOS 24.11 stable release for better stability
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    # Using nixpkgs-unstable (recommended stable approach for macOS)
+    # This is actually the most stable approach for nix-darwin according to the documentation
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     
-    # nix-darwin: Declarative macOS configuration
+    # nix-darwin: Declarative macOS configuration (master branch)
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     
     # nix-homebrew: Homebrew integration for Nix
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-    nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
     
     # mac-app-util: macOS application utilities
     mac-app-util.url = "github:hraban/mac-app-util";
-    mac-app-util.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }:
@@ -28,8 +27,11 @@
       # Allow non open source code to be installed.
       nixpkgs.config.allowUnfree = true;
 
-      # Use touch Id for sudo
-      security.pam.enableSudoTouchIdAuth = true;
+      # Set primary user for system-wide activation
+      system.primaryUser = "surenrao";
+
+      # Use touch Id for sudo (updated syntax)
+      security.pam.services.sudo_local.touchIdAuth = true;
 
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
@@ -242,8 +244,8 @@
       };
 
 
-      # Auto upgrade nix package and the daemon service.
-      services.nix-daemon.enable = true;
+      # Nix daemon is now managed automatically when nix.enable is on
+      # services.nix-daemon.enable = true; # This line is no longer needed
       # nix.package = pkgs.nix;
 
       # Necessary for using flakes on this system.
