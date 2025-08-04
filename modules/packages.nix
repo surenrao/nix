@@ -16,7 +16,8 @@
     # Programming Languages and Runtimes
     python3           # Python 3 interpreter
     nodejs            # Node.js JavaScript runtime
-    
+    python3.pkgs.python-packages  # pip package manager
+
     # AI Development Tools
     aider-chat        # AI pair programming tool
     
