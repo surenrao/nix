@@ -1,307 +1,68 @@
 {
-  # https://www.youtube.com/watch?v=Z8BL8mdzWHI
-  # https://github.com/dreamsofautonomy/nix-darwin/blob/main/flake.nix
-  # darwin-rebuild switch --flake ~/nix#m4max
-  description = "Surya MacbookPro2024 nix-darwin system flake - nixpkgs-unstable (stable approach)";
+  # Nix Darwin System Configuration for MacBook Pro M4 Max
+  # 
+  # References:
+  # - https://www.youtube.com/watch?v=Z8BL8mdzWHI
+  # - https://github.com/dreamsofautonomy/nix-darwin/blob/main/flake.nix
+  #
+  # Usage:
+  #   darwin-rebuild switch --flake ~/nix#m4max
+  
+  description = "Surya MacbookPro2024 nix-darwin system flake - modular configuration";
 
+  # Flake Inputs - All URLs pinned to specific commits for reproducibility
   inputs = {
-    # Using nixpkgs-unstable (recommended stable approach for macOS)
-    # This is actually the most stable approach for nix-darwin according to the documentation
+    # Nixpkgs - Using unstable branch (recommended for nix-darwin)
     nixpkgs.url = "github:NixOS/nixpkgs/bf9fa86a9b1005d932f842edf2c38eeecc98eef3";
     
-    # nix-darwin: Declarative macOS configuration (pinned to specific commit)
+    # Nix-Darwin - Declarative macOS configuration management
     nix-darwin.url = "github:LnL7/nix-darwin/e04a388232d9a6ba56967ce5b53a8a6f713cdfcf";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     
-    # nix-homebrew: Homebrew integration for Nix (pinned to specific commit)
+    # Nix-Homebrew - Homebrew integration for Nix
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew/314d057294e79bc2596972126b84c6f9f144499a";
     
-    # mac-app-util: macOS application utilities (pinned to specific commit)
+    # Mac-App-Util - macOS application utilities for better app integration
     mac-app-util.url = "github:hraban/mac-app-util/341ede93f290df7957047682482c298e47291b4d";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }:
-  let
-    configuration = { pkgs, config, ... }: {
-      
-      # Allow non open source code to be installed.
-      nixpkgs.config.allowUnfree = true;
-
-      # Set primary user for system-wide activation
-      system.primaryUser = "surenrao";
-
-      # Use touch Id for sudo (updated syntax)
-      security.pam.services.sudo_local.touchIdAuth = true;
-
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [
-          pkgs.alacritty
-          pkgs.mkalias  # Required for proper app linking to /Applications
-          pkgs.neovim
-          pkgs.vscode
-          pkgs.tmux
-          pkgs.docker
-          pkgs.docker-compose
-          pkgs.colima
-        ];
-      
-      # Homebrew, anything not found above can be done by homwbrew 
-      homebrew = {
-        enable = true;
-        brews = [
-          # Mac App Store cli
-          "mas"
-        ];
-        # GUI apps
-        casks = [
-          # desktop automation scripting using lua
-          "hammerspoon"
-          # "firefox"
-          # video player
-          "iina"
-          # unzip etc
-          "the-unarchiver"
-          "pearcleaner"
-          # clipboard manager
-          "maccy"
-          "itsycal"
-          # LLM inference engine
-          "lm-studio"
-        ];
-        # mac store apps
-        masApps = {
-          "Windows App" = 1295203466;
-          "Xcode" = 497799835;
-          # "Tailscale" = 1475387142;
-        };
-        # this will remove any homebrew apps not listed here
-        onActivation.cleanup = "zap";
-        onActivation.autoUpdate = true;
-        onActivation.upgrade = true;
-      };
-      
-      # Font package for Alacrity.
-      # fonts.packages = [
-      #   (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-      # ];
-
-      # Installing Rosetta 2 https://github.com/LnL7/nix-darwin/issues/786
-      # system.activationScripts.extraActivation.text = ''
-      #  softwareupdate --install-rosetta --agree-to-license
-      # '';
-
-      # system.activationScripts.postUserActivation.text = ''
-      #   # Following line should allow us to avoid a logout/login cycle
-      #   /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-      # '';
-
-      # Enable proper application linking for Spotlight and Launchpad integration
-      system.activationScripts.applications.text = let
-        env = pkgs.buildEnv {
-          name = "system-applications";
-          paths = config.environment.systemPackages;
-          pathsToLink = "/Applications";
-        };
-      in
-        pkgs.lib.mkForce ''
-          # Set up applications for Spotlight and Launchpad integration
-          echo "setting up /Applications..." >&2
-          rm -rf /Applications/Nix\ Apps
-          mkdir -p /Applications/Nix\ Apps
-          find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-          while read -r src; do
-            app_name=$(basename "$src")
-            echo "linking $src" >&2
-            # Create symbolic links instead of aliases for better Spotlight integration
-            ln -sf "$src" "/Applications/Nix Apps/$app_name"
-          done
-          
-          # Force Spotlight to reindex the Applications folder
-          echo "Reindexing Spotlight for Applications..." >&2
-          /usr/bin/mdimport -r /Applications/Nix\ Apps/ || true
-          /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f -R -domain local -domain system -domain user /Applications/Nix\ Apps/ || true
-        '';
-
-      # https://nixcademy.com/posts/nix-on-macos/
-      nix.extraOptions = ''
-        extra-platforms = x86_64-darwin aarch64-darwin
-      '';
-
-      # MacOS system setting https://mynixos.com/nix-darwin/options/system.defaults
-      system.defaults = {
-        dock.autohide  = true;
-        dock.persistent-apps = [
-         "/System/Applications/Launchpad.app"
-         "/Applications/Firefox.app"
-          "/Applications/Google Chrome.app"
-          "/System/Applications/Messages.app"
-          "/System/Applications/Calendar.app"
-         "/System/Applications/Mail.app"
-          "/System/Applications/App Store.app"
-          "/System/Applications/Notes.app"
-          "/System/Applications/iPhone Mirroring.app"
-          "/System/Applications/System Settings.app"
-         "${pkgs.alacritty}/Applications/Alacritty.app"
-          "/System/Applications/Utilities/Terminal.app"
-       ];
-        
-        finder = {
-	        FXPreferredViewStyle = "clmv";
-          _FXSortFoldersFirst = true;
-          AppleShowAllExtensions = true;
-          # When performing a search, search the current folder by default
-          FXDefaultSearchScope = "SCcf";
-          ShowPathbar = true;
-	        ShowStatusBar = true;
-	      };
-
-	      controlcenter = {
-           BatteryShowPercentage = true;
-        };
-
-        loginwindow.GuestEnabled  = false;
-        
-        NSGlobalDomain = {
-          AppleInterfaceStyle = "Dark";
-          AppleShowAllExtensions = true;
-        };
-
-        CustomUserPreferences = {
-          NSGlobalDomain = {
-            # Add a context menu item for showing the Web Inspector in web views
-            WebKitDeveloperExtras = true;
-          };
-          "com.apple.finder" = {
-            ShowExternalHardDrivesOnDesktop = true;
-            ShowHardDrivesOnDesktop = true;
-            ShowMountedServersOnDesktop = true;
-            ShowRemovableMediaOnDesktop = true;
-          };
-          "com.apple.desktopservices" = {
-            # Avoid creating .DS_Store files on network or USB volumes
-            DSDontWriteNetworkStores = true;
-            DSDontWriteUSBStores = true;
-          };
-          "com.apple.screensaver" = {
-            # Require password immediately after sleep or screen saver begins
-            # askForPassword = 1;
-            # askForPasswordDelay = 0;
-          };
-          "com.apple.screencapture" = {
-            location = "~/Desktop";
-            type = "png";
-          };
-          # "com.apple.Safari" = {
-          #   # Privacy: don’t send search queries to Apple
-          #   UniversalSearchEnabled = false;
-          #   SuppressSearchSuggestions = true;
-          #   # Press Tab to highlight each item on a web page
-          #   WebKitTabToLinksPreferenceKey = true;
-          #   ShowFullURLInSmartSearchField = true;
-          #   # Prevent Safari from opening ‘safe’ files automatically after downloading
-          #   AutoOpenSafeDownloads = false;
-          #   ShowFavoritesBar = false;
-          #   IncludeInternalDebugMenu = true;
-          #   IncludeDevelopMenu = true;
-          #   WebKitDeveloperExtrasEnabledPreferenceKey = true;
-          #   WebContinuousSpellCheckingEnabled = true;
-          #   WebAutomaticSpellingCorrectionEnabled = false;
-          #   AutoFillFromAddressBook = false;
-          #   AutoFillCreditCardData = false;
-          #   AutoFillMiscellaneousForms = false;
-          #   WarnAboutFraudulentWebsites = true;
-          #   WebKitJavaEnabled = false;
-          #   WebKitJavaScriptCanOpenWindowsAutomatically = false;
-          #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks" = true;
-          #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
-          #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled" = false;
-          #   "com.apple.Safari.ContentPageGroupIdentifier.WsebKit2JavaEnabled" = false;
-          #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles" = false;
-          #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically" = false;
-          # };
-          # "com.apple.mail" = {
-          #   # Disable inline attachments (just show the icons)
-          #   DisableInlineAttachmentViewing = true;
-          # };
-          "com.apple.AdLib" = {
-            allowApplePersonalizedAdvertising = false;
-          };
-          "com.apple.print.PrintingPrefs" = {
-            # Automatically quit printer app once the print jobs complete
-            "Quit When Finished" = true;
-          };
-          # "com.apple.LSShadowIndex" = true;
-          "com.apple.SoftwareUpdate" = {
-            AutomaticCheckEnabled = true;
-            # Check for software updates daily, not just once per week
-            ScheduleFrequency = 1;
-            # Download newly available updates in background
-            AutomaticDownload = 1;
-            # Install System data files & security updates
-            CriticalUpdateInstall = 1;
-          };
-          "com.apple.TimeMachine".DoNotOfferNewDisksForBackup = true;
-          # Prevent Photos from opening automatically when devices are plugged in
-          "com.apple.ImageCapture".disableHotPlug = true;
-          # Turn on app auto-update
-          "com.apple.commerce".AutoUpdate = true;
-        };
-      };
-
-
-      # Nix daemon is now managed automatically when nix.enable is on
-      # services.nix-daemon.enable = true; # This line is no longer needed
-      # nix.package = pkgs.nix;
-
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
-      # Enable alternative shell support in nix-darwin.
-      programs.fish.enable = true;
-
-     # programs.git = {
-     #   enable = true;
-     #   userName  = "Surya Nyayapati";
-     #   userEmail = "surenrao@gmail.com";
-     # };
-
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      # Updated to 5 for compatibility with NixOS 24.11
-      system.stateVersion = 5;
-
-      # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
-    };
-  in
-  {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#simple
+  # Flake Outputs
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }: {
+    
+    # Darwin System Configuration
     darwinConfigurations."m4max" = nix-darwin.lib.darwinSystem {
       modules = [
-          configuration
-          mac-app-util.darwinModules.default
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              enable = true;
-              # Apple Silicon Only
-              enableRosetta = true;
-              # User owning the Homebrew prefix
-              user = "surenrao";
-              # Automatically migrate existing Homebrew installations
-              # autoMigrate = true;
-            };
-          }
-       ];
+        # Import all configuration modules
+        ./modules/packages.nix
+        ./modules/homebrew.nix
+        ./modules/system-defaults.nix
+        ./modules/applications.nix
+        ./modules/security.nix
+        ./modules/nix-config.nix
+        ./modules/user.nix
+        
+        # External modules
+        mac-app-util.darwinModules.default
+        nix-homebrew.darwinModules.nix-homebrew
+        
+        # Nix-Homebrew configuration
+        {
+          nix-homebrew = {
+            enable = true;
+            enableRosetta = true;           # Apple Silicon Rosetta 2 support
+            user = "surenrao";              # Homebrew prefix owner
+            # autoMigrate = true;           # Uncomment to migrate existing Homebrew
+          };
+        }
+        
+        # Set configuration revision for tracking
+        {
+          system.configurationRevision = self.rev or self.dirtyRev or null;
+        }
+      ];
     };
 
-    # Expose the package set, including overlays, for convenience.
+    # Expose package set for convenience
     darwinPackages = self.darwinConfigurations."m4max".pkgs;
   };
 }
