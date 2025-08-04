@@ -16,16 +16,18 @@ Your `flake.nix` has been successfully refactored to use the **recommended stabl
 - Added better comments and documentation
 - Updated description to reflect stable version usage
 - Ensured all inputs follow the same nixpkgs version
+- **Fixed macOS app integration**: Enabled proper linking to `/Applications` for Spotlight and Launchpad
 
 ### 3. Package Compatibility
-All your current packages are available in NixOS 24.11:
+All your current packages are available and properly integrated:
 - ✅ alacritty
 - ✅ neovim
-- ✅ vscode
+- ✅ vscode (now properly integrated with Spotlight and Launchpad)
 - ✅ tmux
 - ✅ docker
 - ✅ docker-compose
 - ✅ colima
+- ✅ mkalias (added for proper app linking)
 
 ## Next Steps (Manual Actions Required)
 
@@ -104,6 +106,12 @@ If you encounter issues, you can rollback:
    - This is a harmless deprecation warning from nix-darwin itself
    - It doesn't affect functionality and will be fixed in future nix-darwin versions
    - Safe to ignore for now
+
+5. **Applications Not Showing in Spotlight/Launchpad**
+   - **Fixed**: Enabled `system.activationScripts.applications` for proper app linking
+   - **Added**: `mkalias` package for creating proper macOS application aliases
+   - **Result**: Nix-installed apps now appear in `/Applications/Nix Apps/` and are indexed by Spotlight
+   - **Note**: After applying the configuration, apps should appear properly in Launchpad and Spotlight search
 
 ### Getting Help
 - NixOS Manual: https://nixos.org/manual/nixos/stable/
