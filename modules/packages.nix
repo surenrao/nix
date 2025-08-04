@@ -9,10 +9,10 @@
     alacritty          # GPU-accelerated terminal emulator
     neovim            # Modern Vim-based text editor
     tmux              # Terminal multiplexer
-    
+      
     # Development Environment
     vscode            # Visual Studio Code editor
-    
+      
     # Programming Languages and Runtimes
     python3           # Python 3 interpreter
     nodejs            # Node.js JavaScript runtime
@@ -20,13 +20,18 @@
 
     # AI Development Tools
     aider-chat        # AI pair programming tool
-    
+      
     # Container and Virtualization
     docker            # Container platform
     docker-compose    # Multi-container Docker applications
     colima            # Container runtime for macOS
-    
+      
     # System Utilities
     mkalias           # Required for proper app linking to /Applications
   ];
+    
+  environment.extraInit = ''
+    export LM_STUDIO_API_KEY=dummy-api-key
+    export LM_STUDIO_API_BASE=http://localhost:1234/v1
+  '';
 }
