@@ -31,6 +31,10 @@ The following packages are now managed by home-manager:
 - [`curl`](https://curl.se/) - HTTP client
 - [`wget`](https://www.gnu.org/software/wget/) - File downloader
 
+#### Python Development Tools
+- [`pip`](https://pip.pypa.io/) - Python package installer (user-level)
+- [`virtualenv`](https://virtualenv.pypa.io/) - Virtual environment creator (user-level)
+
 #### Shell and Terminal Utilities
 - [`bat`](https://github.com/sharkdp/bat) - Better cat with syntax highlighting
 - [`eza`](https://github.com/eza-community/eza) - Better ls with colors and icons
@@ -76,7 +80,13 @@ The following packages are now managed by home-manager:
 
 ## 🚀 Usage
 
-### Managing Home Manager
+### Unified Rebuild (Recommended)
+Use the unified rebuild script to apply both system and user configurations:
+```bash
+./rebuild-system.sh
+```
+
+### Managing Home Manager Individually
 
 ```bash
 # Apply configuration changes
@@ -120,16 +130,35 @@ home.packages = with pkgs; [
 Then apply the changes:
 ```bash
 home-manager switch
+# OR use the unified rebuild script
+./rebuild-system.sh
 ```
 
 ## 🔄 Integration with Nix-Darwin
 
 ### Complementary Setup
 
-- **System packages** (nix-darwin): Alacritty, Neovim, Tmux, VSCode, Docker
-- **User packages** (home-manager): Git, development tools, shell utilities
-- **System settings** (nix-darwin): macOS defaults, security, Homebrew
+- **System packages** (nix-darwin): Alacritty, Neovim, Tmux, VSCode, Docker, Python 3.13.5
+- **User packages** (home-manager): Git, development tools, shell utilities, Python tools
+- **System settings** (nix-darwin): macOS defaults, security, Homebrew, environment variables
 - **User settings** (home-manager): Dotfiles, shell configuration, user programs
+
+### Python Development Environment
+
+#### System-Level (nix-darwin)
+- **Python 3.13.5** with full development tools
+- **pip 25.0.1** system-wide installation
+- **virtualenv 20.31.2** system-wide installation
+
+#### User-Level (home-manager)
+- Additional Python tools and completions
+- User-specific Python environment variables
+- Shell integrations for Python development
+
+#### LM Studio Integration
+System-wide environment variables configured in [`modules/user.nix`](modules/user.nix):
+- `LM_STUDIO_API_KEY=lm-studio`
+- `LM_STUDIO_API_BASE=http://localhost:1234/v1`
 
 ### Avoiding Conflicts
 
@@ -203,6 +232,15 @@ gh auth login
 # JSON/YAML processing
 echo '{"key": "value"}' | jq .
 echo 'key: value' | yq .
+
+# Python development
+python3 --version
+pip --version
+virtualenv myproject
+source myproject/bin/activate
+
+# AI development with Aider + LM Studio
+aider --model lm-studio/your-model-name
 ```
 
 ## 🔧 Troubleshooting

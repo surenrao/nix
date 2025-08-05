@@ -28,14 +28,10 @@
     curl                   # HTTP client
     wget                   # File downloader
     
-    # Python Development Tools
+    # Python Development Tools (basic ones available in nixpkgs)
     python3Packages.pip    # Python package installer
     python3Packages.virtualenv  # Virtual environment creator
-    python3Packages.pipenv # Higher-level Python packaging tool
-    python3Packages.poetry # Modern Python dependency management
-    python3Packages.black  # Python code formatter
-    python3Packages.flake8 # Python linter
-    python3Packages.pytest # Python testing framework
+    # Note: pipenv, poetry, black, flake8, pytest can be installed via pip in virtual environments
     
     # Shell and Terminal Utilities
     bat                    # Better cat with syntax highlighting
@@ -94,9 +90,7 @@
     # Python environment variables
     PYTHONPATH = "$HOME/.local/lib/python3.11/site-packages:$PYTHONPATH";
     PIP_USER = "1";  # Install packages to user directory by default
-    # LM Studio API configuration for Aider
-    LM_STUDIO_API_KEY = "lm-studio";  # Default API key for LM Studio
-    LM_STUDIO_API_BASE = "http://localhost:1234/v1";  # Default LM Studio API endpoint
+    # Note: LM Studio API variables are configured system-wide in user.nix
   };
 
   # Program configurations

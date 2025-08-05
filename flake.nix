@@ -19,10 +19,6 @@
     nix-darwin.url = "github:LnL7/nix-darwin/e04a388232d9a6ba56967ce5b53a8a6f713cdfcf";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     
-    # Home Manager - User environment management
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    
     # Nix-Homebrew - Homebrew integration for Nix
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew/314d057294e79bc2596972126b84c6f9f144499a";
     
@@ -31,7 +27,7 @@
   };
 
   # Flake Outputs
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, home-manager, mac-app-util }: {
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }: {
     
     # Darwin System Configuration
     darwinConfigurations."m4max" = nix-darwin.lib.darwinSystem {
@@ -48,6 +44,9 @@
         # External modules
         mac-app-util.darwinModules.default
         nix-homebrew.darwinModules.nix-homebrew
+        
+        # Note: Home Manager is configured as standalone
+        # Run 'home-manager switch' after 'darwin-rebuild switch' for full setup
         
         # Nix-Homebrew configuration
         {
