@@ -28,6 +28,15 @@
     curl                   # HTTP client
     wget                   # File downloader
     
+    # Python Development Tools
+    python3Packages.pip    # Python package installer
+    python3Packages.virtualenv  # Virtual environment creator
+    python3Packages.pipenv # Higher-level Python packaging tool
+    python3Packages.poetry # Modern Python dependency management
+    python3Packages.black  # Python code formatter
+    python3Packages.flake8 # Python linter
+    python3Packages.pytest # Python testing framework
+    
     # Shell and Terminal Utilities
     bat                    # Better cat with syntax highlighting
     eza                    # Better ls with colors and icons
@@ -82,6 +91,9 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     BROWSER = "open";
+    # Python environment variables
+    PYTHONPATH = "$HOME/.local/lib/python3.11/site-packages:$PYTHONPATH";
+    PIP_USER = "1";  # Install packages to user directory by default
   };
 
   # Program configurations

@@ -43,3 +43,8 @@
     };
   };
 }
+
+# environment.extraInit = ''
+#     export LM_STUDIO_API_KEY=dummy-api-key
+#     export LM_STUDIO_API_BASE=http://localhost:1234/v1
+#   '';

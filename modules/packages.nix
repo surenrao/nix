@@ -14,9 +14,10 @@
     vscode            # Visual Studio Code editor
       
     # Programming Languages and Runtimes
-    python3           # Python 3 interpreter
+    python3Full       # Python 3 interpreter with pip and development tools
+    python3Packages.pip        # Python package installer
+    python3Packages.virtualenv # Virtual environment creator
     nodejs            # Node.js JavaScript runtime
-    python3.pkgs.python-packages  # pip package manager
 
     # AI Development Tools
     aider-chat        # AI pair programming tool
@@ -29,9 +30,4 @@
     # System Utilities
     mkalias           # Required for proper app linking to /Applications
   ];
-    
-  environment.extraInit = ''
-    export LM_STUDIO_API_KEY=dummy-api-key
-    export LM_STUDIO_API_BASE=http://localhost:1234/v1
-  '';
 }
