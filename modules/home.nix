@@ -94,6 +94,9 @@
     # Python environment variables
     PYTHONPATH = "$HOME/.local/lib/python3.11/site-packages:$PYTHONPATH";
     PIP_USER = "1";  # Install packages to user directory by default
+    # LM Studio API configuration for Aider
+    LM_STUDIO_API_KEY = "lm-studio";  # Default API key for LM Studio
+    LM_STUDIO_API_BASE = "http://localhost:1234/v1";  # Default LM Studio API endpoint
   };
 
   # Program configurations

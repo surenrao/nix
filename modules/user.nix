@@ -1,17 +1,11 @@
 # User Configuration
-# Manages user-specific settings and shell environment
+# Manages system-level user settings (nix-darwin)
+# Note: User-level configurations are handled by Home Manager in home.nix
 { ... }: {
   
   # System User Configuration
   system.primaryUser = "surenrao";          # Primary system user
   
-  # Shell Configuration
-  programs.fish.enable = true;              # Enable Fish shell support
-  
-  # Git Configuration (commented out - can be enabled if needed)
-  # programs.git = {
-  #   enable = true;
-  #   userName = "Surya Nyayapati";
-  #   userEmail = "surenrao@gmail.com";
-  # };
+  # Note: Shell and Git configurations are handled by Home Manager in home.nix
+  # This keeps system-level and user-level configurations properly separated
 }
