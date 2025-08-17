@@ -14,6 +14,8 @@
     vscode            # Visual Studio Code editor
       
     # Programming Languages and Runtimes
+    direnv            # unclutter your .profile
+    devenv            # Declaratively define your development environment
     python3Full       # Python 3 interpreter with pip and development tools
     python3Packages.pip        # Python package installer
     python3Packages.virtualenv # Virtual environment creator
@@ -22,7 +24,8 @@
     # AI Development Tools
     aider-chat        # AI pair programming tool
     ollama            # Local AI model runner
-      
+    open-webui        # UI for ollama
+
     # Container and Virtualization
     docker            # Container platform
     docker-compose    # Multi-container Docker applications
