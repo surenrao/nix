@@ -138,7 +138,7 @@ home-manager switch
 
 ### Complementary Setup
 
-- **System packages** (nix-darwin): Alacritty, Neovim, Tmux, VSCode, Docker, Python 3.13.5
+- **System packages** (nix-darwin): Alacritty, Neovim, Tmux, VSCode, Docker, Python 3.13.5, Ollama
 - **User packages** (home-manager): Git, development tools, shell utilities, Python tools
 - **System settings** (nix-darwin): macOS defaults, security, Homebrew, environment variables
 - **User settings** (home-manager): Dotfiles, shell configuration, user programs
@@ -149,16 +149,13 @@ home-manager switch
 - **Python 3.13.5** with full development tools
 - **pip 25.0.1** system-wide installation
 - **virtualenv 20.31.2** system-wide installation
+- **Ollama** for local AI model running
 
 #### User-Level (home-manager)
 - Additional Python tools and completions
 - User-specific Python environment variables
 - Shell integrations for Python development
 
-#### LM Studio Integration
-System-wide environment variables configured in [`modules/user.nix`](modules/user.nix):
-- `LM_STUDIO_API_KEY=lm-studio`
-- `LM_STUDIO_API_BASE=http://localhost:1234/v1`
 
 ### Avoiding Conflicts
 
@@ -239,8 +236,10 @@ pip --version
 virtualenv myproject
 source myproject/bin/activate
 
-# AI development with Aider + LM Studio
-aider --model lm-studio/your-model-name
+# AI development with Ollama
+ollama --version
+ollama list  # List downloaded models
+ollama run llama3  # Run the llama3 model
 ```
 
 ## 🔧 Troubleshooting

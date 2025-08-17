@@ -91,14 +91,13 @@ nix flake update && sudo darwin-rebuild switch --flake ~/nix#m4max
 - **Terminal**: Alacritty, Neovim, Tmux
 - **Development**: Visual Studio Code, Python 3.13.5 (with pip & virtualenv)
 - **Containers**: Docker, Docker Compose, Colima
-- **AI Development**: Aider Chat (AI pair programming)
+- **AI Development**: Aider Chat (AI pair programming), Ollama (local AI model runner)
 
 ### GUI Applications (via Homebrew)
 - **Automation**: Hammerspoon
 - **Media**: IINA video player
 - **Utilities**: The Unarchiver, PearCleaner
 - **Productivity**: Maccy (clipboard), Itsycal (calendar)
-- **AI**: LM Studio
 
 ### Mac App Store Apps
 - Windows App (Microsoft Remote Desktop)
@@ -108,7 +107,6 @@ nix flake update && sudo darwin-rebuild switch --flake ~/nix#m4max
 - **macOS Defaults**: Dark mode, Finder preferences, Dock settings
 - **Security**: Touch ID for sudo, guest user disabled
 - **Applications**: Spotlight integration for Nix apps
-- **Environment Variables**: LM Studio API configuration for Aider integration
 
 ### User Packages (via Home Manager)
 - **Development Tools**: Git, GitHub CLI, jq, yq, curl, wget
@@ -134,7 +132,7 @@ Edit [`modules/system-defaults.nix`](modules/system-defaults.nix) to customize:
 ### User Settings
 Edit [`modules/user.nix`](modules/user.nix) for:
 - Primary user configuration
-- System-wide environment variables (LM Studio API keys)
+- System-wide environment variables
 
 ### User Environment (Home Manager)
 Edit [`modules/home.nix`](modules/home.nix) for:
@@ -165,19 +163,6 @@ source myproject/bin/activate
 pip install requests numpy pandas
 ```
 
-## 🤖 AI Development Integration
-
-### LM Studio + Aider Setup
-Environment variables are automatically configured:
-- `LM_STUDIO_API_KEY=lm-studio`
-- `LM_STUDIO_API_BASE=http://localhost:1234/v1`
-
-### Usage
-```bash
-# Start LM Studio server (GUI)
-# Then use aider with local models
-aider --model lm-studio/your-model-name
-```
 
 ## 🔍 Troubleshooting
 

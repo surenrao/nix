@@ -21,6 +21,7 @@
 
     # AI Development Tools
     aider-chat        # AI pair programming tool
+    ollama            # Local AI model runner
       
     # Container and Virtualization
     docker            # Container platform

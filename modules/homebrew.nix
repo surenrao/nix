@@ -24,8 +24,6 @@
       "maccy"            # Clipboard manager
       "itsycal"          # Menu bar calendar
       
-      # AI and Development
-      "lm-studio"        # Local LLM inference engine
     ];
     
     # Mac App Store Applications
