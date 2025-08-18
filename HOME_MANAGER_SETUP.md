@@ -138,7 +138,7 @@ home-manager switch
 
 ### Complementary Setup
 
-- **System packages** (nix-darwin): Alacritty, Neovim, Tmux, VSCode, Docker, Python 3.13.5, Ollama
+- **System packages** (nix-darwin): Alacritty, Neovim, Tmux, VSCode, Docker, Python 3.13.5, Playwright, Ollama
 - **User packages** (home-manager): Git, development tools, shell utilities, Python tools
 - **System settings** (nix-darwin): macOS defaults, security, Homebrew, environment variables
 - **User settings** (home-manager): Dotfiles, shell configuration, user programs

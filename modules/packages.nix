@@ -13,6 +13,7 @@
     # Development Environment
     vscode            # Visual Studio Code editor
       
+    playwright        # Web testing automation
     # Programming Languages and Runtimes
     direnv            # unclutter your .profile
     devenv            # Declaratively define your development environment
