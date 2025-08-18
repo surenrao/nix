@@ -17,7 +17,6 @@
     # Programming Languages and Runtimes
     direnv            # unclutter your .profile
     devenv            # Declaratively define your development environment
-    python3Full       # Python 3 interpreter with pip and development tools
     python3Packages.pip        # Python package installer
     python3Packages.virtualenv # Virtual environment creator
     nodejs            # Node.js JavaScript runtime
