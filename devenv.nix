@@ -1,41 +1,30 @@
-{ pkgs, config, ... }:
+{ pkgs, lib, config, inputs, ... }:
 
 {
-  # Basic package definitions
+  # https://devenv.sh/basics/
+  env.GREET = "Python devenv";
+
+  # https://devenv.sh/packages/
   packages = with pkgs; [
     python3
     python3Packages.pip
     python3Packages.virtualenv
+    python3Packages.black
+    python3Packages.flake8
+    python3Packages.pytest
   ];
 
-  # Environment variables
-  env = {
-    PYTHON_KEYRING_BACKEND = "keyring.backends.null.Keyring";
-  };
-
-  # Languages configuration
+  # https://devenv.sh/languages/
   languages.python = {
     enable = true;
     package = pkgs.python3;
   };
 
-  # Scripts for common tasks
-  scripts = {
-    "test" = {
-      exec = "python -m pytest";
-      description = "Run tests with pytest";
-    };
-    "format" = {
-      exec = "python -m black .";
-      description = "Format code with black";
-    };
-    "lint" = {
-      exec = "python -m flake8 .";
-      description = "Lint code with flake8";
-    };
-  };
+  # https://devenv.sh/scripts/
+  scripts.test.exec = "python -m pytest";
+  scripts.format.exec = "black .";
+  scripts.lint.exec = "flake8 .";
 
-  # Development shell hooks
   enterShell = ''
     echo "Python development environment activated"
     echo "Python version: $(python --version)"
@@ -50,9 +39,17 @@
     fi
   '';
 
-  # Pre-commit hooks for code quality
-  pre-commit.hooks = {
+  # https://devenv.sh/tests/
+  enterTest = ''
+    echo "Running tests"
+    python --version
+  '';
+
+  # https://devenv.sh/git-hooks/
+  git-hooks.hooks = {
     black.enable = true;
     flake8.enable = true;
   };
+
+  # See full reference at https://devenv.sh/reference/options/
 }

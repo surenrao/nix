@@ -1,5 +1,67 @@
-result
+# Editor and OS files
 .DS_Store
 *.swp
 *.swo
 .aider*
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Development environment files
+.devenv/
+
+# Kilocode files
+.kilocode/
+
+# Log files
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Build artifacts and cache
+dist/
+build/
+*.egg-info/
+*.egg
+node_modules/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Backup files
+*~
+.*.sw[op]
+*.bak
+*.backup
+
+# Nix specific ignores (built results)
+result
+result-*
+
+# direnv files
+.direnv/
+.envrc
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local configuration files (should not be committed)
+*.local
+*.local.*

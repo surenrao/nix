@@ -144,25 +144,7 @@ Edit [`modules/home.nix`](modules/home.nix) for:
 ## 🐍 Python Development
 
 ### Available Tools
-- **Python 3.13.5** with full development tools
-- **pip 25.0.1** for package management
-- **virtualenv 20.31.2** for isolated environments
 - **devenv** for declarative development environments
-
-### Usage Examples
-```bash
-# Check versions
-python3 --version
-pip --version
-virtualenv --version
-
-# Create virtual environment
-virtualenv myproject
-source myproject/bin/activate
-
-# Install packages
-pip install requests numpy pandas
-```
 
 ### Using devenv for Python Development
 
@@ -170,17 +152,14 @@ This configuration includes devenv.sh for creating reproducible development envi
 
 #### Entering the Python Development Environment
 ```bash
-# Enter the default development shell
-nix develop
-
-# Or explicitly use the devenv shell
-nix develop .#default
+# Enter the development shell using devenv
+devenv shell
 ```
 
 #### Features of the Python devenv Environment
 - Pre-configured Python 3 environment
 - Automatic virtual environment creation
-- Pre-commit hooks for code quality (black, flake8)
+- Git hooks for code quality (black, flake8)
 - Helpful scripts for common tasks:
   - `test`: Run tests with pytest
   - `format`: Format code with black
@@ -191,11 +170,11 @@ The devenv configuration is defined in `devenv.nix`. You can modify this file to
 - Add additional Python packages
 - Configure environment variables
 - Add custom scripts
-- Set up pre-commit hooks
+- Set up git hooks
 
 After making changes to `devenv.nix`, rebuild the environment with:
 ```bash
-nix develop
+devenv shell
 ```
 
 

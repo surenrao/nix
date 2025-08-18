@@ -44,7 +44,6 @@
         ./modules/security.nix
         ./modules/nix-config.nix
         ./modules/user.nix
-        ./modules/python.nix
         
         # External modules
         mac-app-util.darwinModules.default
@@ -74,14 +73,12 @@
     darwinPackages = self.darwinConfigurations."m4max".pkgs;
     
     # Development shells
-    devShells = flake-utils.lib.eachSystem [ "aarch64-darwin" ] (system: {
-      pkgs = nixpkgs.legacyPackages.${system};
-      default = devenv.lib.mkShell {
-        inherit inputs pkgs;
-        modules = [
-          ./devenv.nix
-        ];
-      };
-    });
+    devShells.aarch64-darwin.default = devenv.lib.mkShell {
+      inherit inputs;
+      pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+      modules = [
+        ./devenv.nix
+      ];
+    };
   };
 }
