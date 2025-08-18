@@ -20,6 +20,10 @@
     enable = true;
     package = pkgs.python3;
   };
+  languages.javascript = {
+    enable = true;
+    package = pkgs.nodejs;
+  };
 
   # https://devenv.sh/scripts/
   scripts.test.exec = "python -m pytest";
