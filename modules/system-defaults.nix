@@ -66,6 +66,7 @@
         ShowHardDrivesOnDesktop = true;
         ShowMountedServersOnDesktop = true;
         ShowRemovableMediaOnDesktop = true;
+        AppleShowAllFiles = true;             # show all hidden files, Command+shift+. to toggle
       };
       
       # Desktop Services Configuration
