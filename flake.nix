@@ -24,10 +24,14 @@
     
     # Mac-App-Util - macOS application utilities for better app integration
     mac-app-util.url = "github:hraban/mac-app-util/341ede93f290df7957047682482c298e47291b4d";
+    
+    # Devenv - Development environment for Nix
+    devenv.url = "github:cachix/devenv";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   # Flake Outputs
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }: {
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util, devenv, flake-utils }: {
     
     # Darwin System Configuration
     darwinConfigurations."m4max" = nix-darwin.lib.darwinSystem {
@@ -40,6 +44,7 @@
         ./modules/security.nix
         ./modules/nix-config.nix
         ./modules/user.nix
+        ./modules/python.nix
         
         # External modules
         mac-app-util.darwinModules.default
@@ -67,5 +72,16 @@
 
     # Expose package set for convenience
     darwinPackages = self.darwinConfigurations."m4max".pkgs;
+    
+    # Development shells
+    devShells = flake-utils.lib.eachSystem [ "aarch64-darwin" ] (system: {
+      pkgs = nixpkgs.legacyPackages.${system};
+      default = devenv.lib.mkShell {
+        inherit inputs pkgs;
+        modules = [
+          ./devenv.nix
+        ];
+      };
+    });
   };
 }

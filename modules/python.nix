@@ -1,21 +1,15 @@
-{
-  description = "Python development environment";
+# Python Development Environment Configuration
+# Configures devenv for Python development
+{ pkgs, config, ... }: {
 
-  outputs = { self, args }: {
-    devShells."m4max-python" = devenv.lib.devShell {
-      name = "python";
-      description = "Python development shell for M4 Max";
-      
-      inputs = {
-        nixpkgs = self.inputs.nixpkgs;
-        flake-utils = self.inputs.flake-utils;
-        devenv = self.inputs.devenv;
-      };
-      
-      buildInputs = [
-        # Use a specific Python version (3.12 in this example)
-        self.inputs.devenv.devenv.python312
-      ];
-    };
-  };
+  # Note: Actual devenv configuration is defined in devenv.nix
+  # This module just ensures the necessary packages are available
+  
+  # System packages needed for Python development
+  environment.systemPackages = with pkgs; [
+    # devenv is already included in packages.nix
+    # Additional Python tools that might be useful
+    python3Packages.pip
+    python3Packages.virtualenv
+  ];
 }

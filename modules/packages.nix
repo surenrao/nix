@@ -23,8 +23,8 @@
 
     # AI Development Tools
     aider-chat        # AI pair programming tool
-    ollama            # Local AI model runner
-    open-webui        # UI for ollama
+    # ollama            # Local AI model runner
+    # open-webui        # UI for ollama
 
     # Container and Virtualization
     docker            # Container platform
