@@ -116,6 +116,14 @@
     
     bash = {
       enable = true;
+      # You can add further Bash configuration options here, for example:
+      # shellAliases = {
+      #   ll = "ls -l";
+      #   gc = "git commit";
+      # };
+      # bashrcExtra = ''
+      #   export MY_VAR="hello"
+      # '';
     };
 
     # Fish shell configuration (complements your nix-darwin fish setup)
