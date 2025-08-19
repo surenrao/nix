@@ -90,7 +90,11 @@
     # Python environment variables
     PYTHONPATH = "$HOME/.local/lib/python3.11/site-packages:$PYTHONPATH";
     PIP_USER = "1";  # Install packages to user directory by default
-    # Note: LM Studio API variables are configured system-wide in user.nix
+    # OLLAMA configuration variables
+    OLLAMA_FLASH_ATTENTION = "1"; # Faster Memory efficient attention
+    OLLAMA_KV_CACHE_TYPE = "q8_0"; # Compress context memory
+    OLLAMA_CONTEXT_LENGTH = "8192"; # Context window size, can go 32K if llm supports
+    OLLAMA_MAX_LOADED_MODELS = "2"; # limit models in memory
   };
 
   # Program configurations
@@ -116,6 +120,12 @@
       interactiveShellInit = ''
         # Set up zoxide
         zoxide init fish | source
+        
+        # Export OLLAMA environment variables for compatibility
+        set -gx OLLAMA_FLASH_ATTENTION "1"
+        set -gx OLLAMA_KV_CACHE_TYPE "q8_0"
+        set -gx OLLAMA_CONTEXT_LENGTH "8192"
+        set -gx OLLAMA_MAX_LOADED_MODELS "2"
         
         # Aliases
         alias ls="eza --icons"
