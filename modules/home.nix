@@ -114,6 +114,10 @@
       };
     };
     
+    bash = {
+      enable = true;
+    };
+
     # Fish shell configuration (complements your nix-darwin fish setup)
     fish = {
       enable = true;
@@ -135,7 +139,7 @@
         alias cd="z"
       '';
     };
-    
+
     # Starship prompt
     starship = {
       enable = true;
