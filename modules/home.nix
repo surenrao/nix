@@ -17,86 +17,86 @@
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
-  # User-specific packages managed by Home Manager
-  # These complement the system packages in your nix-darwin configuration
-  home.packages = with pkgs; [
-    # Development Tools
-    git                    # Version control
-    gh                     # GitHub CLI
-    jq                     # JSON processor
-    yq                     # YAML processor
-    curl                   # HTTP client
-    wget                   # File downloader
-    
-    # Python Development Tools (basic ones available in nixpkgs)
-    python3Packages.pip    # Python package installer
-    python3Packages.virtualenv  # Virtual environment creator
-    # Note: pipenv, poetry, black, flake8, pytest can be installed via pip in virtual environments
-    
-    # Shell and Terminal Utilities
-    bat                    # Better cat with syntax highlighting
-    eza                    # Better ls with colors and icons
-    fd                     # Better find
-    ripgrep                # Better grep
-    fzf                    # Fuzzy finder
-    zoxide                 # Smart cd command
-    
-    # System Monitoring
-    htop                   # Process viewer
-    btop                   # Resource monitor
-    
-    # Text Processing
-    tree                   # Directory tree viewer
-    
-    # Fonts (Nerd Fonts for terminal icons)
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
-  ];
-
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
-
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/surenrao/etc/profile.d/hm-session-vars.sh
-  #
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    BROWSER = "open";
-    # Python environment variables
-    PYTHONPATH = "$HOME/.local/lib/python3.11/site-packages:$PYTHONPATH";
-    PIP_USER = "1";  # Install packages to user directory by default
-    # OLLAMA configuration variables
-    OLLAMA_FLASH_ATTENTION = "1"; # Faster Memory efficient attention
-    OLLAMA_KV_CACHE_TYPE = "q8_0"; # Compress context memory
-    OLLAMA_CONTEXT_LENGTH = "8192"; # Context window size, can go 32K if llm supports
-    OLLAMA_MAX_LOADED_MODELS = "2"; # limit models in memory
-  };
-
+  
+    # User-specific packages managed by Home Manager
+    # These complement the system packages in your nix-darwin configuration
+    home.packages = with pkgs; [
+      # Development Tools
+      git                    # Version control
+      gh                     # GitHub CLI
+      jq                     # JSON processor
+      yq                     # YAML processor
+      curl                   # HTTP client
+      wget                   # File downloader
+      
+      # Python Development Tools (basic ones available in nixpkgs)
+      python3Packages.pip    # Python package installer
+      python3Packages.virtualenv  # Virtual environment creator
+      # Note: pipenv, poetry, black, flake8, pytest can be installed via pip in virtual environments
+      
+      # Shell and Terminal Utilities
+      bat                    # Better cat with syntax highlighting
+      eza                    # Better ls with colors and icons
+      fd                     # Better find
+      ripgrep                # Better grep
+      fzf                    # Fuzzy finder
+      zoxide                 # Smart cd command
+      
+      # System Monitoring
+      htop                   # Process viewer
+      btop                   # Resource monitor
+      
+      # Text Processing
+      tree                   # Directory tree viewer
+      
+      # Fonts (Nerd Fonts for terminal icons)
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+    ];
+  
+    # Home Manager is pretty good at managing dotfiles. The primary way to manage
+    # plain files is through 'home.file'.
+    home.file = {
+      # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+      # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+      # # symlink to the Nix store copy.
+      # ".screenrc".source = dotfiles/screenrc;
+  
+      # # You can also set the file content immediately.
+      # ".gradle/gradle.properties".text = ''
+      #   org.gradle.console=verbose
+      #   org.gradle.daemon.idletimeout=3600000
+      # '';
+    };
+  
+    # Home Manager can also manage your environment variables through
+    # 'home.sessionVariables'. These will be explicitly sourced when using a
+    # shell provided by Home Manager. If you don't want to manage your shell
+    # through Home Manager then you have to manually source 'hm-session-vars.sh'
+    # located at either
+    #
+    #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+    #
+    # or
+    #
+    #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
+    #
+    # or
+    #
+    #  /etc/profiles/per-user/surenrao/etc/profile.d/hm-session-vars.sh
+    #
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      BROWSER = "open";
+      # Python environment variables
+      PYTHONPATH = "$HOME/.local/lib/python3.11/site-packages:$PYTHONPATH";
+      PIP_USER = "1";  # Install packages to user directory by default
+      # OLLAMA configuration variables
+      OLLAMA_FLASH_ATTENTION = "1"; # Faster Memory efficient attention
+      OLLAMA_KV_CACHE_TYPE = "q8_0"; # Compress context memory
+      OLLAMA_CONTEXT_LENGTH = "8192"; # Context window size, can go 32K if llm supports
+      OLLAMA_MAX_LOADED_MODELS = "2"; # limit models in memory
+    };
   # Program configurations
   programs = {
     # Let Home Manager install and manage itself
@@ -147,6 +147,10 @@
         alias cd="z"
       '';
     };
+
+    # Set fish as default shell for user
+    # This is handled through nix-darwin configuration, but we ensure fish is available
+    # The actual shell setting is done in system configuration
 
     # Starship prompt
     starship = {

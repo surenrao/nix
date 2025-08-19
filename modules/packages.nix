@@ -6,7 +6,7 @@
   # To search for packages: nix search nixpkgs <package-name>
   environment.systemPackages = with pkgs; [
     # Terminal and Development Tools
-    alacritty          # GPU-accelerated terminal emulator
+    # alacritty          # GPU-accelerated terminal emulator
     neovim            # Modern Vim-based text editor
     tmux              # Terminal multiplexer
       

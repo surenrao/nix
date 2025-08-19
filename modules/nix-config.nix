@@ -1,6 +1,6 @@
 # Nix Configuration
 # Manages Nix daemon settings and experimental features
-{ ... }: {
+{ pkgs, ... }: {
   
   # Nixpkgs Configuration
   nixpkgs.config.allowUnfree = true;        # Allow proprietary software
@@ -27,4 +27,7 @@
   
   # Target platform architecture
   nixpkgs.hostPlatform = "aarch64-darwin";  # Apple Silicon
+  
+  # Environment shells - makes fish available in the system environment
+  environment.shells = [ pkgs.fish ];
 }
