@@ -17,7 +17,7 @@
     # Programming Languages and Runtimes
     direnv            # unclutter your .profile
     devenv            # Declaratively define your development environment
-    # nodejs            # Node.js JavaScript runtime
+    nodejs            # Node.js JavaScript runtime
 
     # AI Development Tools
     aider-chat        # AI pair programming tool
