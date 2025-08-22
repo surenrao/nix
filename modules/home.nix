@@ -21,6 +21,7 @@
     # User-specific packages managed by Home Manager
     # These complement the system packages in your nix-darwin configuration
     home.packages = with pkgs; [
+      devenv
       # Development Tools
       git                    # Version control
       gh                     # GitHub CLI
@@ -138,6 +139,11 @@
         set -gx OLLAMA_KV_CACHE_TYPE "q8_0"
         set -gx OLLAMA_CONTEXT_LENGTH "8192"
         set -gx OLLAMA_MAX_LOADED_MODELS "2"
+
+        # Automatically activate devenv environment
+        if test -f "$HOME/.devenv/bin/activate"; then
+          source "$HOME/.devenv/bin/activate"
+        fi
         
         # Aliases
         alias ls="eza --icons"
