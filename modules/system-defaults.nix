@@ -21,7 +21,6 @@
         "/System/Applications/Notes.app"
         "/System/Applications/iPhone Mirroring.app"
         "/System/Applications/System Settings.app"
-        "${pkgs.alacritty}/Applications/Alacritty.app"
         "/System/Applications/Utilities/Terminal.app"
       ];
     };

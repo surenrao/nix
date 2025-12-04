@@ -8,24 +8,7 @@
     # Command-line tools via Homebrew
     brews = [
       "mas"              # Mac App Store command-line interface
-      # Development Tools
-      "gh"                     # GitHub CLI
-      "yq"                     # YAML processor
-      "wget"                   # File downloader
-      # Shell and Terminal Utilities
-      "bat"                    # Better cat with syntax highlighting
-      "eza"                    # Better ls with colors and icons
-      "fd"                     # Better find
-      "ripgrep"                # Better grep
-      "fzf"                    # Fuzzy finder
-      "zoxide"                 # Smart cd command
-      # System Monitoring
-      "htop"                   # Process viewer
-      "btop"                   # Resource monitor
-      
-      # Text Processing
-      "tree"     
-
+      # All CLI/dev tools now managed via Nix for better reproducibility
       # Fonts (Nerd Fonts for terminal icons)
       # "font-fira-code"
       # "font-hack-nerd-font"

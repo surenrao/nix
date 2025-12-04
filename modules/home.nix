@@ -34,7 +34,7 @@
       python3Packages.pip    # Python package installer
       python3Packages.virtualenv  # Virtual environment creator
       # Note: pipenv, poetry, black, flake8, pytest can be installed via pip in virtual environments
-      
+
       # Shell and Terminal Utilities
       bat                    # Better cat with syntax highlighting
       eza                    # Better ls with colors and icons
@@ -89,8 +89,8 @@
     home.sessionVariables = {
       EDITOR = "nvim";
       BROWSER = "open";
-      # Python environment variables
-      PYTHONPATH = "$HOME/.local/lib/python3.11/site-packages:$PYTHONPATH";
+      # Python environment variables (dynamic version)
+      PYTHONPATH = "$HOME/.local/lib/python${pkgs.python3.pythonVersion}/site-packages:$PYTHONPATH";
       PIP_USER = "1";  # Install packages to user directory by default
       # OLLAMA configuration variables
       OLLAMA_FLASH_ATTENTION = "1"; # Faster Memory efficient attention
@@ -126,37 +126,6 @@
       #   export MY_VAR="hello"
       # '';
     };
-
-    # Fish shell configuration (complements your nix-darwin fish setup)
-    fish = {
-      enable = true;
-      interactiveShellInit = ''
-        # Set up zoxide
-        zoxide init fish | source
-        
-        # Export OLLAMA environment variables for compatibility
-        set -gx OLLAMA_FLASH_ATTENTION "1"
-        set -gx OLLAMA_KV_CACHE_TYPE "q8_0"
-        set -gx OLLAMA_CONTEXT_LENGTH "8192"
-        set -gx OLLAMA_MAX_LOADED_MODELS "2"
-
-        # Automatically activate devenv environment
-        if test -f "$HOME/.devenv/bin/activate"; then
-          source "$HOME/.devenv/bin/activate"
-        fi
-        
-        # Aliases
-        alias ls="eza --icons"
-        alias ll="eza -l --icons"
-        alias la="eza -la --icons"
-        alias cat="bat"
-        alias cd="z"
-      '';
-    };
-
-    # Set fish as default shell for user
-    # This is handled through nix-darwin configuration, but we ensure fish is available
-    # The actual shell setting is done in system configuration
 
     # Starship prompt
     starship = {

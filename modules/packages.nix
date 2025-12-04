@@ -12,12 +12,12 @@
       
     # Development Environment
     vscode            # Visual Studio Code editor
-      
+    dotnet-sdk_10     # .NET SDK 10 (latest - Nov 2024)
+
     playwright        # Web testing automation
     # Programming Languages and Runtimes
     direnv            # unclutter your .profile
     devenv            # Declaratively define your development environment
-    # nodejs            # Node.js JavaScript runtime (defined in devenv.nix)
 
     # AI Development Tools
     aider-chat        # AI pair programming tool
