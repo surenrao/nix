@@ -10,21 +10,21 @@
   
   description = "Surya MacbookPro2024 nix-darwin system flake - modular configuration";
 
-  # Flake Inputs - All URLs pinned to specific commits for reproducibility
+  # Flake Inputs - Following latest stable branches (will be pinned after testing)
   inputs = {
     # Nixpkgs - Using unstable branch (recommended for nix-darwin)
-    nixpkgs.url = "github:NixOS/nixpkgs/bf9fa86a9b1005d932f842edf2c38eeecc98eef3";
-    
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
     # Nix-Darwin - Declarative macOS configuration management
-    nix-darwin.url = "github:LnL7/nix-darwin/e04a388232d9a6ba56967ce5b53a8a6f713cdfcf";
+    nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     # Nix-Homebrew - Homebrew integration for Nix
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew/314d057294e79bc2596972126b84c6f9f144499a";
-    
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
     # Mac-App-Util - macOS application utilities for better app integration
-    mac-app-util.url = "github:hraban/mac-app-util/341ede93f290df7957047682482c298e47291b4d";
-    
+    mac-app-util.url = "github:hraban/mac-app-util";
+
     # Devenv - Development environment for Nix
     devenv.url = "github:cachix/devenv";
     flake-utils.url = "github:numtide/flake-utils";
