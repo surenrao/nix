@@ -18,15 +18,18 @@
     casks = [
       # System Automation
       "hammerspoon"      # Desktop automation scripting using Lua
-      
+
       # Media and Utilities
       "iina"             # Modern media player for macOS
       "the-unarchiver"   # Archive extraction utility
       "pearcleaner"      # Application uninstaller and cleaner
-      
+
       # Productivity Tools
       "maccy"            # Clipboard manager
       "itsycal"          # Menu bar calendar
+
+      # Creative Tools
+      "inkscape"         # Vector graphics editor
     ];
     
     # Mac App Store Applications

@@ -1,8 +1,18 @@
 # Home Manager Configuration
 # User-specific packages and configurations managed by Home Manager
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
+  # Fix for fcitx5-with-addons moved from libsForQt5 to kdePackages in nixpkgs unstable
+  # This overlay prevents Home Manager evaluation errors
+  nixpkgs.overlays = [
+    (final: prev: {
+      libsForQt5 = prev.libsForQt5 // {
+        fcitx5-with-addons = prev.kdePackages.fcitx5-with-addons;
+      };
+    })
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "surenrao";
@@ -17,7 +27,11 @@
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
-  
+  # Disable nixpkgs version check to allow mismatched versions
+  # (Home Manager 25.11 with Nixpkgs unstable)
+  home.enableNixpkgsReleaseCheck = false;
+
+
     # User-specific packages managed by Home Manager
     # These complement the system packages in your nix-darwin configuration
     home.packages = with pkgs; [
@@ -106,9 +120,11 @@
     # Git configuration
     git = {
       enable = true;
-      userName = "Surya Nyayapati";
-      userEmail = "surenrao@gmail.com";
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Surya Nyayapati";
+          email = "surenrao@gmail.com";
+        };
         init.defaultBranch = "main";
         push.default = "simple";
         pull.rebase = false;

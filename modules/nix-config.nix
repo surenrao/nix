@@ -29,5 +29,5 @@
   nixpkgs.hostPlatform = "aarch64-darwin";  # Apple Silicon
   
   # Environment shells - makes fish available in the system environment
-  environment.shells = [ pkgs.fish ];
+  # environment.shells = [ pkgs.fish ];
 }
