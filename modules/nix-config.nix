@@ -8,8 +8,11 @@
   # Nix Daemon Settings
   nix = {
     # Enable experimental features required for flakes
-    settings.experimental-features = "nix-command flakes";
-    
+    settings = {
+      experimental-features = "nix-command flakes";
+      trusted-users = [ "root" "surenrao" ];  # Allow devenv to manage binary caches
+    };
+
     # Multi-platform support for cross-compilation
     # Reference: https://nixcademy.com/posts/nix-on-macos/
     extraOptions = ''
