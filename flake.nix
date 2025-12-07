@@ -40,6 +40,7 @@
         ./modules/packages.nix
         ./modules/homebrew.nix
         ./modules/system-defaults.nix
+        ./modules/networking.nix
         ./modules/applications.nix
         ./modules/security.nix
         ./modules/nix-config.nix
