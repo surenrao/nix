@@ -31,6 +31,11 @@
   # (Home Manager 25.11 with Nixpkgs unstable)
   home.enableNixpkgsReleaseCheck = false;
 
+  # Add ~/.local/bin to PATH (for self-updating tools like Claude Code)
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
 
     # User-specific packages managed by Home Manager
     # These complement the system packages in your nix-darwin configuration
