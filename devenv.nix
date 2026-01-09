@@ -6,21 +6,15 @@
 
   # https://devenv.sh/packages/
   packages = with pkgs; [
-    python3
-    python3Packages.pip
-    python3Packages.virtualenv
-    python3Packages.black
-    python3Packages.flake8
-    python3Packages.pytest
     nodejs
+    uv
   ];
-
-
 
   # https://devenv.sh/languages/
   languages.python = {
     enable = true;
-    package = pkgs.python3;
+    uv.enable = true;
+    uv.sync.enable = true;
   };
   languages.javascript = {
     enable = true;
@@ -28,22 +22,13 @@
   };
 
   # https://devenv.sh/scripts/
-  scripts.test.exec = "python -m pytest";
-  scripts.format.exec = "black .";
-  scripts.lint.exec = "flake8 .";
+  scripts.test.exec = "uv run pytest";
+  scripts.format.exec = "uv run black .";
+  scripts.lint.exec = "uv run flake8 .";
 
   enterShell = ''
-    echo "Python development environment activated"
-    echo "Python version: $(python --version)"
-    echo "Pip version: $(pip --version)"
-    
-    # Create a virtual environment if it doesn't exist
-    if [ ! -d ".venv" ]; then
-      echo "Creating virtual environment..."
-      python -m venv .venv
-      source .venv/bin/activate
-      pip install --upgrade pip
-    fi
+    echo "Python development environment (uv-managed) activated"
+    uv --version
   '';
 
   # https://devenv.sh/tests/
