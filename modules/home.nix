@@ -35,6 +35,7 @@
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/.npm-global/bin"
+    "$HOME/.cargo/bin"
   ];
 
 
@@ -50,7 +51,8 @@
       curl                   # HTTP client
       wget                   # File downloader
       
-      # Python Development Tools (basic ones available in nixpkgs)
+      # Python Development Tools
+      uv                     # Extremely fast Python package and project manager
       python3Packages.pip    # Python package installer
       python3Packages.virtualenv  # Virtual environment creator
       # Note: pipenv, poetry, black, flake8, pytest can be installed via pip in virtual environments
