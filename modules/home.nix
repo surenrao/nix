@@ -34,6 +34,7 @@
   # Add ~/.local/bin to PATH (for self-updating tools like Claude Code)
   home.sessionPath = [
     "$HOME/.local/bin"
+    "$HOME/.npm-global/bin"
   ];
 
 
@@ -111,6 +112,8 @@
       # Python environment variables (dynamic version)
       PYTHONPATH = "$HOME/.local/lib/python${pkgs.python3.pythonVersion}/site-packages:$PYTHONPATH";
       PIP_USER = "1";  # Install packages to user directory by default
+      # NPM configuration for global packages without sudo
+      NPM_CONFIG_PREFIX = "$HOME/.npm-global";
       # OLLAMA configuration variables
       OLLAMA_FLASH_ATTENTION = "1"; # Faster Memory efficient attention
       OLLAMA_KV_CACHE_TYPE = "q8_0"; # Compress context memory
