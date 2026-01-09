@@ -53,9 +53,7 @@
       
       # Python Development Tools
       uv                     # Extremely fast Python package and project manager
-      python3Packages.pip    # Python package installer
-      python3Packages.virtualenv  # Virtual environment creator
-      # Note: pipenv, poetry, black, flake8, pytest can be installed via pip in virtual environments
+      # Note: Python versions and tools can be managed via uv
 
       # Shell and Terminal Utilities
       bat                    # Better cat with syntax highlighting
@@ -111,9 +109,6 @@
     home.sessionVariables = {
       EDITOR = "nvim";
       BROWSER = "open";
-      # Python environment variables (dynamic version)
-      PYTHONPATH = "$HOME/.local/lib/python${pkgs.python3.pythonVersion}/site-packages:$PYTHONPATH";
-      PIP_USER = "1";  # Install packages to user directory by default
       # NPM configuration for global packages without sudo
       NPM_CONFIG_PREFIX = "$HOME/.npm-global";
       # OLLAMA configuration variables
