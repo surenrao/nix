@@ -121,6 +121,9 @@
   programs = {
     # Let Home Manager install and manage itself
     home-manager.enable = true;
+
+    # Enable Zsh shell management by Home Manager
+    zsh.enable = true;
     
     # Git configuration
     git = {

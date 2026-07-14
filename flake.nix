@@ -34,7 +34,7 @@
   };
 
   # Flake Outputs
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util, devenv, flake-utils }: {
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util, devenv, flake-utils, ... }: {
     
     # Darwin System Configuration
     darwinConfigurations."m4max" = nix-darwin.lib.darwinSystem {

@@ -2,12 +2,21 @@
 
 {
   # https://devenv.sh/basics/
-  env.GREET = "Python devenv";
+  env.GREET = "Python and .NET devenv";
 
-  # Fix for missing cspell in older nixpkgs pin
+  # Bypasses the runtime macOS localization crash when using .NET binaries
+  env.DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = "1";
+
+  # Fix for missing packages and package builder crashes
   overlays = [
     (final: prev: {
       cspell = prev.nodePackages.cspell or prev.hello;
+      
+      # Fixes the build block for pre-commit by telling the builder to skip 
+      # the buggy global setup phase. This allows pre-commit to compile cleanly.
+      prek = prev.pre-commit.overrideAttrs (oldAttrs: {
+        dontConfigureNuget = true;
+      });
     })
   ];
 
@@ -27,6 +36,12 @@
     enable = true;
     package = pkgs.nodejs;
   };
+  
+  # This enables the .NET SDK seamlessly inside your development workspace
+  languages.dotnet = {
+    enable = true;
+    package = pkgs.dotnet-sdk_10; 
+  };
 
   # https://devenv.sh/scripts/
   scripts.test.exec = "uv run pytest";
@@ -34,8 +49,9 @@
   scripts.lint.exec = "uv run flake8 .";
 
   enterShell = ''
-    echo "Python development environment (uv-managed) activated"
+    echo "Development environment (uv + dotnet) activated!"
     uv --version
+    dotnet --version
   '';
 
   # https://devenv.sh/tests/
@@ -49,6 +65,4 @@
     black.enable = true;
     flake8.enable = true;
   };
-
-  # See full reference at https://devenv.sh/reference/options/
 }
