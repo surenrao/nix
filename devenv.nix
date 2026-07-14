@@ -5,9 +5,9 @@
   env.GREET = "Python devenv";
 
   # https://devenv.sh/packages/
-  packages = with pkgs; [
-    nodejs
-    uv
+  packages = [
+    pkgs.nodejs
+    pkgs.uv
   ];
 
   # https://devenv.sh/languages/
@@ -20,6 +20,8 @@
     enable = true;
     package = pkgs.nodejs;
   };
+
+
 
   # https://devenv.sh/scripts/
   scripts.test.exec = "uv run pytest";
