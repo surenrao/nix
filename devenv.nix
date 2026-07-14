@@ -4,6 +4,13 @@
   # https://devenv.sh/basics/
   env.GREET = "Python devenv";
 
+  # Fix for missing cspell in older nixpkgs pin
+  overlays = [
+    (final: prev: {
+      cspell = prev.nodePackages.cspell or prev.hello;
+    })
+  ];
+
   # https://devenv.sh/packages/
   packages = [
     pkgs.nodejs
@@ -20,8 +27,6 @@
     enable = true;
     package = pkgs.nodejs;
   };
-
-
 
   # https://devenv.sh/scripts/
   scripts.test.exec = "uv run pytest";
