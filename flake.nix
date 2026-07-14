@@ -16,7 +16,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # Nix-Darwin - Declarative macOS configuration management
-    nix-darwin.url = "github:LnL7/nix-darwin/master";
+    antigravity-nix.url = "github:jacopone/antigravity-nix";
+    antigravity-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # Nix-Homebrew - Homebrew integration for Nix
@@ -79,6 +82,12 @@
       pkgs = nixpkgs.legacyPackages.aarch64-darwin;
       modules = [
         ./devenv.nix
+        {
+          packages = [
+            inputs.antigravity-nix.packages.aarch64-darwin.google-antigravity-cli
+            inputs.antigravity-nix.packages.aarch64-darwin.google-antigravity-ide
+          ];
+        }
       ];
     };
   };
