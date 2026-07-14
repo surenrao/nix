@@ -5,6 +5,6 @@ inputs:
       nixpkgs:
         follows: nixpkgs
   nixpkgs:
-    url: github:NixOS/nixpkgs/bf9fa86a9b1005d932f842edf2c38eeecc98eef3
+    url: github:NixOS/nixpkgs/nixpkgs-unstable
 nixpkgs:
   allow_unfree: true
