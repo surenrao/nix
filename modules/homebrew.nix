@@ -33,11 +33,17 @@
     ];
     
     # Mac App Store Applications
-    masApps = {
-      "Windows App" = 1295203466;    # Microsoft Remote Desktop
-      "Xcode" = 497799835;           # Apple's development environment
-      # "Tailscale" = 1475387142;    # VPN service (commented out)
-    };
+    # masApps = {
+    #   "Windows App" = 1295203466;    # Microsoft Remote Desktop
+    #   "Xcode" = 497799835;           # Apple's development environment
+    #   # "Tailscale" = 1475387142;    # VPN service (commented out)
+    # };
+    #
+    # NOTE: These masApps (Microsoft Remote Desktop, Xcode) consistently fail to install
+    #       via `darwin-rebuild` due to issues with `mas` in a non-GUI context,
+    #       even when logged into the App Store. Manual installation is required,
+    #       or these entries should remain commented out.
+
     
     # Homebrew Maintenance Settings
     onActivation = {
