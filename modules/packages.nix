@@ -32,4 +32,10 @@
     # System Utilities
     mkalias           # Required for proper app linking to /Applications
   ];
+
+  # Enable fonts management and install Nerd Fonts system-wide
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+  ];
 }
