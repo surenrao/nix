@@ -155,6 +155,7 @@
     starship = {
       enable = true;
       settings = {
+        command_timeout = 2000;
         format = "$all$character";
         character = {
           success_symbol = "[➜](bold green)";
