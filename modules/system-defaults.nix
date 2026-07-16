@@ -11,7 +11,7 @@
       
       # Persistent applications in dock (in order)
       persistent-apps = [
-        "/System/Applications/Launchpad.app"
+        "/System/Applications/Apps.app"
         "/Applications/Firefox.app"
         "/Applications/Google Chrome.app"
         "/System/Applications/Messages.app"
