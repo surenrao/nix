@@ -151,41 +151,44 @@ Edit [`modules/system-defaults.nix`](modules/system-defaults.nix) to customize m
 
 For available options, see: [Nix Darwin System Defaults](https://mynixos.com/nix-darwin/options/system.defaults)
 
-## 🐍 Python Development
+## ⚡ Automatic Environment Activation (direnv + devenv)
 
-### Available Tools
-- **devenv** for declarative development environments
+The development environment configured in `devenv.nix` (.NET 10, Node.js 24, Python 3 + uv) is automatically activated whenever you open a terminal or launch an editor in either `~/nix` or any project inside `~/Projects`.
 
-### Using devenv for Python Development
+### How It Works
 
-This configuration includes devenv.sh for creating reproducible development environments.
+1. **`direnv` with `nix-direnv`**:
+   Managed declaratively in [`modules/home.nix`](modules/home.nix) under `programs.direnv`. Automatically hooked into Zsh (`~/.zshrc`).
+2. **Current Directory (`~/nix`)**:
+   Contains `~/nix/.envrc` (`use devenv`). Entering `~/nix` automatically activates the environment defined in `devenv.nix`.
+3. **Projects Directory (`~/Projects`)**:
+   Contains `~/Projects/.envrc` with `source_env ~/nix/.envrc`. Every project folder under `~/Projects/` (e.g. `kosha-app`, `the-disgraced-prince`, etc.) automatically inherits the complete development environment without needing separate configuration.
+4. **Instant & Cached**:
+   Environment evaluations are cached by `direnv`, taking ~0.5s when entering directories.
+5. **Clean Exit**:
+   Exiting `~/nix` or `~/Projects` automatically unloads the variables and paths from your shell.
 
-#### Entering the Python Development Environment
-```bash
-# Enter the development shell using devenv
-devenv shell
-```
+### Per-Project Overrides
 
-#### Features of the Python devenv Environment
-- Pre-configured Python 3 environment
-- Automatic virtual environment creation
-- Git hooks for code quality (black, flake8)
-- Helpful scripts for common tasks:
-  - `test`: Run tests with pytest
-  - `format`: Format code with black
-  - `lint`: Lint code with flake8
+If a specific project requires its own distinct tools or versions in the future:
+1. Create a `devenv.nix` and `.envrc` inside that project folder:
+   ```bash
+   echo "use devenv" > ~/Projects/<project-name>/.envrc
+   direnv allow ~/Projects/<project-name>
+   ```
+2. Direnv will use that project's local environment instead of the parent `~/Projects` default.
 
-#### Customizing the Python Environment
-The devenv configuration is defined in `devenv.nix`. You can modify this file to:
-- Add additional Python packages
-- Configure environment variables
-- Add custom scripts
-- Set up git hooks
+## 🐍 Development Environment & Languages
 
-After making changes to `devenv.nix`, rebuild the environment with:
-```bash
-devenv shell
-```
+### Included in `devenv.nix`:
+- **.NET SDK 10**: Fully configured with `DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1` for macOS.
+- **Node.js**: Modern JavaScript/TypeScript runtime.
+- **Python 3 & uv**: High-performance Python project management.
+- **Pre-configured Scripts**:
+  - `devenv tasks run test` or `uv run pytest`
+  - `format`: Code formatting with Black
+  - `lint`: Code linting with Flake8
+
 
 
 ## 🧪 Testing Changes

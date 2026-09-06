@@ -124,6 +124,13 @@
 
     # Enable Zsh shell management by Home Manager
     zsh.enable = true;
+
+    # Direnv for automatic per-directory environment loading
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
     
     # Git configuration
     git = {
