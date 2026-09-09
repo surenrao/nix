@@ -48,10 +48,32 @@
   scripts.format.exec = "uv run black .";
   scripts.lint.exec = "uv run flake8 .";
 
+  scripts."antigravity-ide".exec = ''
+    APP_BIN="/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide"
+    USER_APP_BIN="$HOME/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide"
+    if [ -x "$APP_BIN" ]; then
+      exec "$APP_BIN" "$@"
+    elif [ -x "$USER_APP_BIN" ]; then
+      exec "$USER_APP_BIN" "$@"
+    elif command -v open >/dev/null 2>&1; then
+      exec open -a "Antigravity IDE" "$@"
+    else
+      echo "Error: Antigravity IDE was not found in /Applications or ~/Applications." >&2
+      exit 1
+    fi
+  '';
+  scripts.antigravity.exec = ''
+    antigravity-ide "$@"
+  '';
+  scripts."agy-ide".exec = ''
+    antigravity-ide "$@"
+  '';
+
   enterShell = ''
     echo "Development environment (uv + dotnet) activated!"
     uv --version
     dotnet --version
+    echo "Antigravity IDE available: run 'antigravity-ide', 'antigravity', or 'agy-ide'"
   '';
 
   # https://devenv.sh/tests/
