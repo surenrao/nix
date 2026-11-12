@@ -36,6 +36,7 @@
     "$HOME/.local/bin"
     "$HOME/.npm-global/bin"
     "$HOME/.cargo/bin"
+    "${config.home.homeDirectory}/.hermes/bin"
   ];
 
 
