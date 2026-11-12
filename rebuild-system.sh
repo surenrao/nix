@@ -18,10 +18,10 @@ if ! "$(dirname "$0")/check-drift.sh"; then
 fi
 echo ""
 
-# Handle existing /etc/hosts file if not managed by Nix
-if [ -f /etc/hosts ] && [ ! -L /etc/hosts ]; then
-  echo "🚨 Moving existing /etc/hosts to /etc/hosts.before-nix-darwin"
-  sudo mv /etc/hosts /etc/hosts.before-nix-darwin
+# /etc/hosts is generated during activation (modules/networking.nix); private
+# entries come from ~/.config/nix-private/hosts, which is not in this repo
+if [ ! -f "$HOME/.config/nix-private/hosts" ]; then
+  echo "ℹ️  No ~/.config/nix-private/hosts; /etc/hosts will have only the defaults."
 fi
 
 echo "🔄 Rebuilding nix-darwin system configuration..."

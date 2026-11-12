@@ -1,9 +1,12 @@
 # Networking Configuration
 # Manages network settings including hosts file entries
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
+let
+  # Private entries (home network hosts etc.) live outside this public repo.
+  # The file is read at activation time, so it is never copied into the Nix store.
+  privateHosts = "/Users/${config.system.primaryUser}/.config/nix-private/hosts";
 
-  # Custom /etc/hosts entries
-  environment.etc.hosts.text = ''
+  defaultHosts = pkgs.writeText "hosts" ''
     ##
     # Host Database
     #
@@ -13,9 +16,22 @@
     127.0.0.1       localhost
     255.255.255.255 broadcasthost
     ::1             localhost
+  '';
+in {
 
-    # Custom entries
-    192.0.2.10 gitea.home.example proget.home.example truenas.home.example
+  # Build /etc/hosts from the defaults above plus the private file, if present
+  system.activationScripts.postActivation.text = lib.mkAfter ''
+    echo "Writing /etc/hosts..." >&2
+    {
+      cat ${defaultHosts}
+      if [ -f "${privateHosts}" ]; then
+        echo ""
+        echo "# Private entries from ${privateHosts}"
+        cat "${privateHosts}"
+      fi
+    } > /etc/hosts.new
+    chmod 644 /etc/hosts.new
+    mv -f /etc/hosts.new /etc/hosts
   '';
 
 }
