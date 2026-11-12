@@ -15,7 +15,12 @@
     ];
     
     # GUI Applications via Homebrew Casks
+    # Apps with their own updater live here rather than in Nix: rebuilds install
+    # them on a fresh machine, and the apps keep themselves up to date afterwards.
     casks = [
+      # Development Tools
+      "visual-studio-code" # Code editor (self-updating)
+
       # System Automation
       "hammerspoon"      # Desktop automation scripting using Lua
 
@@ -46,10 +51,12 @@
 
     
     # Homebrew Maintenance Settings
+    # Rebuilds only install what's missing; apps update themselves and
+    # anything without an updater can be upgraded manually with `brew upgrade`.
     onActivation = {
       cleanup = "zap";        # Remove unlisted packages
-      autoUpdate = true;      # Auto-update Homebrew
-      upgrade = true;         # Auto-upgrade packages
+      autoUpdate = false;     # Don't refresh Homebrew on every rebuild
+      upgrade = false;        # Don't upgrade packages on rebuild
     };
   };
 }

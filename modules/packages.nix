@@ -11,7 +11,7 @@
     tmux              # Terminal multiplexer
       
     # Development Environment
-    vscode            # Visual Studio Code editor
+    # vscode is installed as a Homebrew cask so it can self-update (see homebrew.nix)
     dotnet-sdk_10     # .NET SDK 10 (latest - Nov 2024)
 
     playwright        # Web testing automation
@@ -28,6 +28,7 @@
     docker            # Container platform
     docker-compose    # Multi-container Docker applications
     colima            # Container runtime for macOS
+    qemu              # Machine emulator and virtualizer
       
     # System Utilities
     mkalias           # Required for proper app linking to /Applications
