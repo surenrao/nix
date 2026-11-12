@@ -5,6 +5,19 @@
 
 set -e  # Exit on any error
 
+# Warn about packages installed outside the config before Homebrew zaps them
+if ! "$(dirname "$0")/check-drift.sh"; then
+  echo ""
+  if [ -t 0 ]; then
+    read -r -p "Continue rebuild anyway? [y/N] " answer
+    case "$answer" in
+      [yY]*) ;;
+      *) echo "Rebuild cancelled."; exit 1 ;;
+    esac
+  fi
+fi
+echo ""
+
 # Handle existing /etc/hosts file if not managed by Nix
 if [ -f /etc/hosts ] && [ ! -L /etc/hosts ]; then
   echo "🚨 Moving existing /etc/hosts to /etc/hosts.before-nix-darwin"
