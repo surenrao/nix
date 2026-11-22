@@ -31,6 +31,16 @@ standalone Home Manager config. ARCHITECTURE.md describes each module.
     installer only if the binary is absent (see Claude Code in `home.nix`).
 - **Homebrew `cleanup = "zap"`**: anything not listed is removed on rebuild.
   Run `check-drift.sh` first; `rebuild-system.sh` does.
+- **Moving a hand-installed app to a cask**: just list it. `brew bundle`
+  installs with `--adopt`, which keeps the existing copy if the cask has
+  `auto_updates` (any version); otherwise versions must match exactly, so
+  move a mismatched hand-installed copy to the Trash first.
+- **Apps without an updater** are casks too, updated by hand with
+  `brew upgrade` (rebuilds never upgrade); they're grouped in homebrew.nix.
+- **Homebrew itself is pinned** by `nix-homebrew` in `flake.lock`
+  (`brew update` can't upgrade it). If casks fail with "definition is
+  invalid", run `nix flake update nix-homebrew`.
+- **App Store apps** go in `homebrew.masApps` (ids from `mas list`).
 - **App config that the app also writes** (and may hold secrets): don't
   symlink it. Track only the tuned keys and deep-merge them with `jq` on
   `home-manager switch` (see `modules/omlx/default.nix`).

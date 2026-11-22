@@ -35,21 +35,70 @@
 
       # Creative Tools
       "inkscape"         # Vector graphics editor
-    ];
-    
-    # Mac App Store Applications
-    # masApps = {
-    #   "Windows App" = 1295203466;    # Microsoft Remote Desktop
-    #   "Xcode" = 497799835;           # Apple's development environment
-    #   # "Tailscale" = 1475387142;    # VPN service (commented out)
-    # };
-    #
-    # NOTE: These masApps (Microsoft Remote Desktop, Xcode) consistently fail to install
-    #       via `darwin-rebuild` due to issues with `mas` in a non-GUI context,
-    #       even when logged into the App Store. Manual installation is required,
-    #       or these entries should remain commented out.
 
-    
+      # Apps first installed by hand, now declared here. All have
+      # auto_updates, so `brew bundle` adopts the existing copy in
+      # /Applications (whatever its version) instead of reinstalling.
+      # Careful: with cleanup = "zap", removing one later uninstalls the
+      # app AND its data.
+      "antigravity"      # Google Antigravity
+      "antigravity-ide"  # Google Antigravity IDE
+      "brave-browser"
+      "claude"           # Claude desktop app
+      "comfyui"          # Comfy Desktop
+      "dropbox"
+      "firefox"
+      "ghostty"          # Terminal
+      "google-chrome"
+      "google-gemini"    # Gemini desktop app (not the "gemini" cask)
+      "resilio-sync"
+      "scroll-reverser"
+      "steam"
+      "stremio"
+      "telegram"         # Native macOS Telegram (ru.keepcoder.Telegram)
+      "tor-browser"
+
+      # No built-in updater: update these with `brew upgrade` now and then
+      # (rebuilds never upgrade). `brew outdated` lists what's behind.
+      # Adopting an existing copy needs the exact cask version, so if one
+      # was installed by hand, remove it before adding it here.
+      "bambu-studio"     # 3D printer slicer
+      "blender"
+      "godot-mono"       # Godot with C#
+      "krita"
+      "mozilla-vpn"      # .pkg; installs over an existing copy
+      "rustdesk"         # Remote desktop
+      "soulseek"
+      "tiled"            # Tile map editor
+
+      # Still manual (see manual-installs.txt): .pkg casks that would
+      # reinstall over a self-updated copy (microsoft-teams would even
+      # downgrade; tailscale-app); no cask for Hermes, Newshosting,
+      # TurboTax, ZeroNet.
+    ];
+
+    # Mac App Store apps (the App Store keeps them updated). `brew bundle`
+    # skips apps already installed, so on this Mac these are a no-op.
+    # On a fresh Mac, sign in to the App Store first; `mas` installs have
+    # failed during darwin-rebuild before, so if one does, install it from
+    # the App Store by hand and rebuild again.
+    masApps = {
+      "GarageBand" = 682658836;
+      "Hush" = 1544743900;               # Safari content blocker
+      "iMovie" = 408981434;
+      "Keynote" = 409183694;
+      "Menu Bar Calendar" = 1558360383;
+      "Numbers" = 409203825;
+      "Pages" = 409201541;
+      "PDFgear" = 6469021132;
+      "SonicWall Mobile Connect" = 822514576;
+      "Steam Link" = 1246969117;
+      "WakeOnCommand" = 1484204619;
+      "Windows App" = 1295203466;        # Microsoft Remote Desktop
+      "WireGuard" = 1451685025;
+      "Xcode" = 497799835;
+    };
+
     # Homebrew Maintenance Settings
     # Rebuilds only install what's missing; apps update themselves and
     # anything without an updater can be upgraded manually with `brew upgrade`.

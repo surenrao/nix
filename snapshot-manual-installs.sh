@@ -55,9 +55,18 @@ collect() {
     ls -1 "$HOME/.local/bin" | sed 's/^/local-bin: /'
   fi
 
-  # App Store apps (id kept so `mas install <id>` can restore them)
+  # App Store apps not in homebrew.masApps (id kept so `mas install <id>`
+  # can restore them)
   if command -v mas >/dev/null; then
-    mas list 2>/dev/null | sed -E 's/^ *([0-9]+) +(.*[^ ]) +\(.*\)$/mas: \2 (\1)/'
+    local mas_ids
+    mas_ids="$(nix eval --raw "$FLAKE_DIR#darwinConfigurations.m4max.config.homebrew.masApps" \
+      --apply 'a: builtins.concatStringsSep "\n" (map toString (builtins.attrValues a))' 2>/dev/null)"
+    mas list 2>/dev/null |
+      sed -E 's/^ *([0-9]+) +(.*[^ ]) +\(.*\)$/\1 \2/' |
+      while read -r id name; do
+        printf '%s\n' "$mas_ids" | grep -qx "$id" && continue
+        echo "mas: $name ($id)"
+      done
   fi
 
   # Apps not from Homebrew, Nix or the App Store (drag-installed / own installer)
