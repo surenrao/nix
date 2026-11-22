@@ -37,6 +37,26 @@ Run with `scripts/omlx-bench.py`.
 | 3 parallel, nothing cached | ~17s | 63–104s |
 | 3 parallel, shared prefix cached | ~3.6s each, ~69 tok/s combined | ~38s |
 
+### Qwen3.6-35B-A3B 6-bit vs Qwen3-Coder-30B-A3B 8-bit (2026-11-22)
+
+| | Qwen3.6-35B-A3B 6-bit (27GB) | Qwen3-Coder-30B-A3B 8-bit (30GB) |
+|---|---|---|
+| 1 request, nothing cached | 3.7s | 4.7s |
+| 3 parallel, nothing cached | 11.9s | 15.7s |
+| 3 parallel, shared prefix cached | 5.4s | 3.2s |
+| Tool calls correct (12 agent-style prompts) | 11/12 | 10/12 |
+| `parse_duration` task passes its tests | 4/5 | 4/5 |
+| Thinking mode | yes | no |
+| Context set in oMLX | 128K | 64K |
+
+The tool-call "misses" were mostly reading README.md before editing it, which
+is reasonable agent behaviour. Small samples, so quality is effectively a tie.
+Qwen3.6 reads cold prompts faster and supports longer context cheaply
+(hybrid attention keeps the KV cache small). Coder reuses cached prefixes
+in 256-token blocks instead of 2K, so it's quicker on repeated agent turns.
+Run one model at a time for parallel agents: both together exceed the
+memory ceiling and oMLX would swap them in and out.
+
 Reading the prompt is the bottleneck on this Mac, not generating text.
 MoE models with ~3B active parameters read prompts 4–5× faster than a dense
 27B, so use them for parallel agents. Hybrid-attention models (Qwen3.5+
