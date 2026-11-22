@@ -3,6 +3,10 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ./omlx # oMLX local LLM server tuning (merged into ~/.omlx on switch)
+  ];
+
   # Fix for fcitx5-with-addons moved from libsForQt5 to kdePackages in nixpkgs unstable
   # This overlay prevents Home Manager evaluation errors
   nixpkgs.overlays = [
@@ -112,11 +116,6 @@
       BROWSER = "open";
       # NPM configuration for global packages without sudo
       NPM_CONFIG_PREFIX = "$HOME/.npm-global";
-      # OLLAMA configuration variables
-      OLLAMA_FLASH_ATTENTION = "1"; # Faster Memory efficient attention
-      OLLAMA_KV_CACHE_TYPE = "q8_0"; # Compress context memory
-      OLLAMA_CONTEXT_LENGTH = "8192"; # Context window size, can go 32K if llm supports
-      OLLAMA_MAX_LOADED_MODELS = "2"; # limit models in memory
     };
   # Program configurations
   programs = {

@@ -16,11 +16,13 @@ This document explains the modular architecture of this nix-darwin configuration
 │   ├── packages.nix               # System packages via Nix
 │   ├── homebrew.nix               # GUI apps & Homebrew integration
 │   ├── home.nix                   # Home Manager user configuration
+│   ├── omlx/                      # oMLX tuning, merged into ~/.omlx on switch (see omlx/README.md)
 │   ├── system-defaults.nix        # macOS system preferences
 │   ├── applications.nix           # App linking for Spotlight
 │   ├── security.nix               # Security & authentication
 │   ├── nix-config.nix            # Nix daemon settings
-│   └── user.nix                   # System user configuration
+│   ├── user.nix                   # System user configuration
+│   └── local-llm.nix              # Local LLM tuning (GPU wired memory limit)
 └── docs/
     ├── README.md                  # Main documentation
     ├── ARCHITECTURE.md            # This file
@@ -160,6 +162,14 @@ onActivation = {
 
 **When to use**: Rarely modified - mainly for initial setup
 
+#### local-llm.nix
+**Purpose**: System tuning for local LLM inference (oMLX)
+
+**What it manages**:
+- `iogpu.wired_limit_mb` (56GB), set at boot by a launchd daemon because the sysctl resets on reboot
+
+**When to use**: Change the limit if you upgrade RAM or need more headroom for other apps
+
 ### User Configuration (Home Manager)
 
 #### home.nix
@@ -179,7 +189,6 @@ onActivation = {
   - `BROWSER=open`
   - `PYTHONPATH` (dynamically set to current Python version)
   - `PIP_USER=1`
-  - OLLAMA configuration variables
 
 - **Program configurations**:
   - Git (user name, email, branch defaults)

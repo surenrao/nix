@@ -48,7 +48,8 @@
         ./modules/security.nix
         ./modules/nix-config.nix
         ./modules/user.nix
-        
+        ./modules/local-llm.nix
+
         # External modules
         mac-app-util.darwinModules.default
         nix-homebrew.darwinModules.nix-homebrew

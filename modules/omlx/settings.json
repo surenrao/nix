@@ -1,0 +1,18 @@
+{
+  "sampling": {
+    "max_context_window": 65536,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "repetition_penalty": 1.0
+  },
+  "scheduler": {
+    "max_concurrent_requests": 8,
+    "chunked_prefill": true,
+    "prefill_priority": "context",
+    "concurrent_priority": "balanced"
+  },
+  "cache": {
+    "ssd_cache_max_size": "100GB"
+  }
+}
