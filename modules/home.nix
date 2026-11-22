@@ -135,7 +135,20 @@
     home-manager.enable = true;
 
     # Enable Zsh shell management by Home Manager
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      # oMLX adds this block to ~/.zshrc when it's missing, which replaces
+      # the Home Manager symlink and breaks the next `home-manager switch`.
+      # Keeping the exact block (markers included) here makes oMLX skip it.
+      initContent = ''
+        # oMLX: CLI shim path begin
+        case ":$PATH:" in
+          *":$HOME/.omlx/bin:"*) ;;
+          *) export PATH="$HOME/.omlx/bin:$PATH" ;;
+        esac
+        # oMLX: CLI shim path end
+      '';
+    };
 
     # Direnv for automatic per-directory environment loading
     direnv = {

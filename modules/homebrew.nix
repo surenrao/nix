@@ -65,6 +65,7 @@
       "bambu-studio"     # 3D printer slicer
       "blender"
       "godot-mono"       # Godot with C#
+      "dotnet-sdk"       # godot-mono dependency; listed so zap keeps it
       "krita"
       "mozilla-vpn"      # .pkg; installs over an existing copy
       "rustdesk"         # Remote desktop

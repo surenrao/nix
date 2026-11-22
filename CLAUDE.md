@@ -35,6 +35,15 @@ standalone Home Manager config. ARCHITECTURE.md describes each module.
   installs with `--adopt`, which keeps the existing copy if the cask has
   `auto_updates` (any version); otherwise versions must match exactly, so
   move a mismatched hand-installed copy to the Trash first.
+- **Adopting under sudo fails**: darwin-rebuild runs `brew bundle` via
+  sudo, and macOS App Management then blocks the `chgrp` on existing apps
+  ("Operation not permitted"). As the user, write
+  `nix eval --raw .#darwinConfigurations.m4max.config.homebrew.brewfile`
+  to a file, run `brew bundle install --no-upgrade --file=<that file>`,
+  then rebuild; it finds them installed.
+- **oMLX edits `~/.zshrc`** (a PATH block) if the block is missing, which
+  breaks `home-manager switch`. The exact block lives in
+  `programs.zsh.initContent` in home.nix so oMLX leaves the file alone.
 - **Apps without an updater** are casks too, updated by hand with
   `brew upgrade` (rebuilds never upgrade); they're grouped in homebrew.nix.
 - **Homebrew itself is pinned** by `nix-homebrew` in `flake.lock`
