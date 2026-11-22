@@ -47,6 +47,18 @@ standalone Home Manager config. ARCHITECTURE.md describes each module.
 - `scripts/omlx-bench.py`: single vs parallel speed benchmark.
 - Local Claude Code: `omlx launch claude --model <model>`.
 
+## Backups to the NAS (Gitea)
+
+- `scripts/gitea-mirror-github.sh`: creates Gitea pull mirrors of all
+  non-fork public GitHub repos (surenrao, tv-watchlist, distro-tailor) in
+  the private org `github-mirror`; Gitea re-syncs every 8h. Re-run to add
+  new repos (existing ones are skipped); `--dry-run` previews.
+- It reads `GITEA_URL` from `~/.config/nix-private/gitea.env` and the token
+  from Keychain item `gitea-api-token`. This repo is public on GitHub, so
+  never put hostnames or tokens in it.
+- Gitea has push-to-create disabled: create a repo first (web UI or API),
+  then push.
+
 ## Gotchas
 
 - Pre-commit runs black (88 cols) and flake8 (79 cols). Keep Python lines
