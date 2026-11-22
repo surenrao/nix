@@ -57,6 +57,22 @@ in 256-token blocks instead of 2K, so it's quicker on repeated agent turns.
 Run one model at a time for parallel agents: both together exceed the
 memory ceiling and oMLX would swap them in and out.
 
+### Agent test: local Claude Code on 6 Exercism tasks (2026-11-22)
+
+Mini Aider-Polyglot run: Claude Code 2.1.330 via `omlx launch claude`,
+6 of the hardest Python exercises (forth, react, pov, book-store, two-bucket,
+sgf-parsing). Each task got instructions, stub and tests, max 40 turns and
+15 min. Scored on the original test file.
+
+| | Qwen3.6-35B-A3B 6-bit | Qwen3-Coder-30B-A3B 8-bit |
+|---|---|---|
+| Solved | **6/6** (~20 min total, 43s–8 min each) | stopped early: forth 49/54 after ~10 min (Qwen3.6: 43s) |
+| Test files edited | none | none |
+
+**Qwen3.6-35B-A3B is the default model.** These exercises are public, so they
+may be in the models' training data. Treat this as "the agent loop works"
+rather than a measure of skill on unseen problems.
+
 Reading the prompt is the bottleneck on this Mac, not generating text.
 MoE models with ~3B active parameters read prompts 4–5× faster than a dense
 27B, so use them for parallel agents. Hybrid-attention models (Qwen3.5+
