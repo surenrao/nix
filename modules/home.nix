@@ -5,6 +5,7 @@
 {
   imports = [
     ./omlx # oMLX local LLM server tuning (merged into ~/.omlx on switch)
+    ./claude-code # Claude Code status line (merged into ~/.claude)
   ];
 
   # Fix for fcitx5-with-addons moved from libsForQt5 to kdePackages in nixpkgs unstable
@@ -148,6 +149,20 @@
         esac
         # oMLX: CLI shim path end
       '';
+    };
+
+    # Ghostty terminal: the Homebrew cask installs and updates the app
+    # (package = null); Home Manager only writes ~/.config/ghostty/config.
+    # Change settings here, not via Cmd+, in Ghostty.
+    ghostty = {
+      enable = true;
+      package = null;
+      settings = {
+        # Copy Ghostty's terminfo to SSH hosts that lack it (e.g. the NAS)
+        # and pass COLORTERM etc.; otherwise TERM=xterm-ghostty can
+        # confuse remote programs. Ghostty's default features stay on.
+        shell-integration-features = "ssh-terminfo,ssh-env";
+      };
     };
 
     # Direnv for automatic per-directory environment loading

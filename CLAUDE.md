@@ -50,6 +50,9 @@ standalone Home Manager config. ARCHITECTURE.md describes each module.
   (`brew update` can't upgrade it). If casks fail with "definition is
   invalid", run `nix flake update nix-homebrew`.
 - **App Store apps** go in `homebrew.masApps` (ids from `mas list`).
+- **Config for a cask app the app never writes** (e.g. Ghostty): use the
+  Home Manager module with `package = null`, so the cask still installs
+  and updates the app (`programs.ghostty` in home.nix).
 - **App config that the app also writes** (and may hold secrets): don't
   symlink it. Track only the tuned keys and deep-merge them with `jq` on
   `home-manager switch` (see `modules/omlx/default.nix`).
@@ -67,6 +70,9 @@ standalone Home Manager config. ARCHITECTURE.md describes each module.
 - Local Claude Code: `./claude-local.sh` (run from the project to work in;
   starts the oMLX server if needed, default model Qwen3.6, `--model` to
   change). It wraps `omlx launch claude --model <model>`.
+- Claude Code status line (model + context used/window, colored):
+  `modules/claude-code/`; only `statusLine` is merged into
+  `~/.claude/settings.json` on switch.
 
 ## Backups to the NAS (Gitea)
 

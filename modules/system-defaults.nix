@@ -21,7 +21,7 @@
         "/System/Applications/Notes.app"
         "/System/Applications/iPhone Mirroring.app"
         "/System/Applications/System Settings.app"
-        "/System/Applications/Utilities/Terminal.app"
+        "/Applications/Ghostty.app"   # Terminal (Homebrew cask)
       ];
     };
     

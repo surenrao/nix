@@ -32,6 +32,7 @@
       
     # System Utilities
     mkalias           # Required for proper app linking to /Applications
+    chafa             # Show images in the terminal (Kitty protocol in Ghostty)
   ];
 
   # Enable fonts management and install Nerd Fonts system-wide
