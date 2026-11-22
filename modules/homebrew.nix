@@ -45,7 +45,7 @@
       "antigravity-ide"  # Google Antigravity IDE
       "brave-browser"
       "claude"           # Claude desktop app
-      "comfyui"          # Comfy Desktop
+      "comfy"            # Comfy Desktop (cask was "comfyui")
       "dropbox"
       "firefox"
       "ghostty"          # Terminal
