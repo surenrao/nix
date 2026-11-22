@@ -65,7 +65,11 @@
       "bambu-studio"     # 3D printer slicer
       "blender"
       "godot-mono"       # Godot with C#
-      "dotnet-sdk"       # godot-mono dependency; listed so zap keeps it
+      "dotnet-sdk"       # The system .NET SDK (latest release); godot-mono needs it too
+      # TEMPORARY: .NET 10 side by side for kosha-app (pinned there in
+      # global.json). Remove once kosha-app is on .NET 11, along with
+      # that global.json.
+      "dotnet-sdk@10"
       "krita"
       "mozilla-vpn"      # .pkg; installs over an existing copy
       "rustdesk"         # Remote desktop

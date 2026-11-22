@@ -64,7 +64,7 @@ packages  homebrew  system-   applications security user
 **What it manages**:
 - Terminal tools (neovim, tmux)
 - Development environments (vscode, devenv)
-- Programming runtimes (.NET SDK 10)
+- Programming runtimes (.NET SDK comes from Homebrew)
 - Container tools (docker, docker-compose, colima)
 - System utilities (playwright, mkalias)
 - AI development tools (aider-chat)
@@ -246,7 +246,7 @@ If available in both:
 
 **Nix manages**:
 - All CLI development tools
-- Programming language runtimes (.NET, Node.js via devenv)
+- Programming language runtimes (Node.js via devenv; .NET from Homebrew)
 - Terminal utilities
 - Text editors and development environments
 - Container tools

@@ -12,7 +12,7 @@
       
     # Development Environment
     # vscode is installed as a Homebrew cask so it can self-update (see homebrew.nix)
-    dotnet-sdk_10     # .NET SDK 10 (latest - Nov 2024)
+    # .NET SDK comes from the Homebrew dotnet-sdk cask (see homebrew.nix)
 
     playwright        # Web testing automation
     # Programming Languages and Runtimes

@@ -97,7 +97,7 @@ nix flake update && sudo darwin-rebuild switch --flake ~/nix#m4max
 
 ### System Packages (via Nix)
 - **Terminal**: Neovim, Tmux
-- **Development**: Visual Studio Code, .NET SDK 10, devenv
+- **Development**: Visual Studio Code, .NET SDK (Homebrew), devenv
 - **Containers**: Docker, Docker Compose, Colima
 - **AI Development**: Aider Chat (AI pair programming)
 - **Utilities**: playwright, mkalias
@@ -153,7 +153,7 @@ For available options, see: [Nix Darwin System Defaults](https://mynixos.com/nix
 
 ## ⚡ Automatic Environment Activation (direnv + devenv)
 
-The development environment configured in `devenv.nix` (.NET 10, Node.js 24, Python 3 + uv) is automatically activated whenever you open a terminal or launch an editor in either `~/nix` or any project inside `~/Projects`.
+The development environment configured in `devenv.nix` (Node.js 24, Python 3 + uv) is automatically activated whenever you open a terminal or launch an editor in either `~/nix` or any project inside `~/Projects`.
 
 ### How It Works
 
@@ -181,7 +181,7 @@ If a specific project requires its own distinct tools or versions in the future:
 ## 🐍 Development Environment & Languages
 
 ### Included in `devenv.nix`:
-- **.NET SDK 10**: Fully configured with `DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1` for macOS.
+- **.NET SDK**: the latest release from the Homebrew `dotnet-sdk` cask, used everywhere (devenv doesn't pin one). Update with `brew upgrade dotnet-sdk`.
 - **Node.js**: Modern JavaScript/TypeScript runtime.
 - **Python 3 & uv**: High-performance Python project management.
 - **Pre-configured Scripts**:

@@ -52,7 +52,7 @@ Use this checklist after making changes to verify everything works correctly.
 - [ ] `tmux -V` works
 - [ ] `code --version` works (VS Code)
 - [ ] `docker --version` works
-- [ ] `dotnet --version` shows .NET SDK 10
+- [ ] `dotnet --version` shows the Homebrew .NET SDK (11.x or later)
 - [ ] `devenv --version` works
 - [ ] `aider --version` works
 

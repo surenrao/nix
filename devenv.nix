@@ -2,10 +2,7 @@
 
 {
   # https://devenv.sh/basics/
-  env.GREET = "Python and .NET devenv";
-
-  # Bypasses the runtime macOS localization crash when using .NET binaries
-  env.DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = "1";
+  env.GREET = "Python devenv";
 
   # Fix for missing packages and package builder crashes
   overlays = [
@@ -37,11 +34,8 @@
     package = pkgs.nodejs;
   };
   
-  # This enables the .NET SDK seamlessly inside your development workspace
-  languages.dotnet = {
-    enable = true;
-    package = pkgs.dotnet-sdk_10; 
-  };
+  # .NET is not set here: the shell uses the system SDK from the Homebrew
+  # dotnet-sdk cask (latest release), which a devenv SDK would shadow.
 
   # https://devenv.sh/scripts/
   scripts.test.exec = "uv run pytest";
@@ -70,9 +64,9 @@
   '';
 
   enterShell = ''
-    echo "Development environment (uv + dotnet) activated!"
+    echo "Development environment (uv) activated!"
     uv --version
-    dotnet --version
+    command -v dotnet >/dev/null && echo ".NET $(dotnet --version)"
     echo "Antigravity IDE available: run 'antigravity-ide', 'antigravity', or 'agy-ide'"
   '';
 
