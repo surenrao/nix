@@ -64,7 +64,9 @@ standalone Home Manager config. ARCHITECTURE.md describes each module.
 - `modules/local-llm.nix`: launchd daemon sets `iogpu.wired_limit_mb=57344`
   (56GB GPU memory) at boot.
 - `scripts/omlx-bench.py`: single vs parallel speed benchmark.
-- Local Claude Code: `omlx launch claude --model <model>`.
+- Local Claude Code: `./claude-local.sh` (run from the project to work in;
+  starts the oMLX server if needed, default model Qwen3.6, `--model` to
+  change). It wraps `omlx launch claude --model <model>`.
 
 ## Backups to the NAS (Gitea)
 
