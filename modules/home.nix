@@ -43,6 +43,18 @@
     "${config.home.homeDirectory}/.hermes/bin"
   ];
 
+  # Self-updating tools: Nix installs them once if missing, then their own
+  # updater keeps them current (same idea as the Homebrew casks).
+  # Claude Code: Anthropic's native installer puts it in ~/.local/bin with a
+  # built-in auto-updater. Not the Homebrew cask, which never self-updates.
+  home.activation.installClaudeCode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -x "$HOME/.local/bin/claude" ]; then
+      echo "Installing Claude Code (native, self-updating)..."
+      run env PATH="${pkgs.curl}/bin:/usr/bin:/bin:$PATH" \
+        ${pkgs.bash}/bin/bash -c '${pkgs.curl}/bin/curl -fsSL https://claude.ai/install.sh | ${pkgs.bash}/bin/bash'
+    fi
+  '';
+
 
     # User-specific packages managed by Home Manager
     # These complement the system packages in your nix-darwin configuration
