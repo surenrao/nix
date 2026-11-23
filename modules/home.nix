@@ -6,6 +6,7 @@
   imports = [
     ./omlx # oMLX local LLM server tuning (merged into ~/.omlx on switch)
     ./claude-code # Claude Code status line (merged into ~/.claude)
+    ./nvim # Neovim with LazyVim (~/.config/nvim)
   ];
 
   # Fix for fcitx5-with-addons moved from libsForQt5 to kdePackages in nixpkgs unstable

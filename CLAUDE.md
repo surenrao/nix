@@ -56,6 +56,9 @@ standalone Home Manager config. ARCHITECTURE.md describes each module.
 - **App config that the app also writes** (and may hold secrets): don't
   symlink it. Track only the tuned keys and deep-merge them with `jq` on
   `home-manager switch` (see `modules/omlx/default.nix`).
+- **App config folders the app also writes into** (e.g. Neovim, where
+  lazy.nvim writes `lazy-lock.json`): link files one by one with
+  `recursive = true` so the folder stays writable (`modules/nvim/`).
 - **Private data** (e.g. /etc/hosts entries) stays outside the repo in
   `~/.config/nix-private/`.
 

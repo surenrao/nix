@@ -17,6 +17,8 @@ This document explains the modular architecture of this nix-darwin configuration
 │   ├── homebrew.nix               # GUI apps & Homebrew integration
 │   ├── home.nix                   # Home Manager user configuration
 │   ├── omlx/                      # oMLX tuning, merged into ~/.omlx on switch (see omlx/README.md)
+│   ├── claude-code/               # Claude Code status line, merged into ~/.claude/settings.json
+│   ├── nvim/                      # Neovim + LazyVim config, linked file by file into ~/.config/nvim
 │   ├── system-defaults.nix        # macOS system preferences
 │   ├── applications.nix           # App linking for Spotlight
 │   ├── security.nix               # Security & authentication
